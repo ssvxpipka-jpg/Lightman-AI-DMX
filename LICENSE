@@ -1,26 +1,5 @@
 MIT License
 
-Copyright (c) 2026 Lightman Project Contributors
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-MIT License
-
 Copyright (c) 2026 [Твое Имя или Ник]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -47,7 +26,11 @@ LIGHTMAN PROJECT - FUTURE ROADMAP & NEXT UPDATES
 Author: [Твое Имя или Ник]
 Year: 2026
 
-Next Updates:
-1. Bug fixes and interface redesign.
-2. MIDI keyboards, DJ consoles, and Sound consoles support.
-3. Lightman Server OS (Multi-user Linux server).
+Next Updates (By community request):
+1. Bug fixes, stability improvements, and UI redesign.
+2. Local user profiles with auto-backups and restore options.
+3. MIDI, DJ, and Sound console support.
+4. Two-way IP authentication and Team Management for Lightman Server.
+5. Lightman Server OS (Custom Linux Server for multi-user lighting and fallback).
+6. Version 5.0 Ultimate Vision: Full broadcast & sound management, AI script analysis, song selection, intercom integration, and a fully autonomous Smart AI Assistant.
+====================================================================

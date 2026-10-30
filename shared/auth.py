@@ -43,6 +43,7 @@ def _init_db() -> None:
             username    TEXT    UNIQUE NOT NULL,
             password    TEXT    NOT NULL,  -- bcrypt hash
             salt        TEXT    NOT NULL,  -- bcrypt salt
+            api_key     TEXT    UNIQUE NOT NULL,
             created_at  TEXT    NOT NULL,
             last_login  TEXT
         )
@@ -91,14 +92,15 @@ def register_user(username: str, password: str) -> bool:
     password_bytes = password.encode("utf-8")
     salt = bcrypt.gensalt(rounds=12)
     hashed = bcrypt.hashpw(password_bytes, salt).decode("utf-8")
+    api_key = secrets.token_hex(16)
 
     conn = _get_connection()
     try:
         cursor = conn.cursor()
         now = datetime.utcnow().isoformat()
         cursor.execute(
-            "INSERT INTO users (username, password, salt, created_at) VALUES (?, ?, ?, ?)",
-            (username, hashed, salt.decode("utf-8"), now),
+            "INSERT INTO users (username, password, salt, api_key, created_at) VALUES (?, ?, ?, ?, ?)",
+            (username, hashed, salt.decode("utf-8"), api_key, now),
         )
         conn.commit()
         logger.info("User registered: %s", username)
@@ -292,3 +294,15 @@ def verify_session_token(username: str, token: str) -> bool:
         return False
     return hmac.compare_digest(stored_token, token)
 
+def get_user_api_key(username: str) -> Optional[str]:
+    """Get the saved API key for a user.
+    Returns the API key string, or None if user not found.
+    """
+    conn = _get_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT api_key FROM users WHERE username = ?", (username,))
+        row = cursor.fetchone()
+        return row["api_key"] if row else None
+    finally:
+        conn.close()

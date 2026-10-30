@@ -16,19 +16,22 @@ Features:
 from __future__ import annotations
 
 import sys
+import shutil
+import subprocess
 from pathlib import Path
 
 # Ensure project root is on sys.path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from PySide6.QtCore import Qt, QSize, QTimer
+from PySide6.QtCore import Qt, QSize, QTimer, QThread, Signal, QEventLoop
 from PySide6.QtGui import QFont, QPalette, QColor, QGuiApplication, QAction
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QLabel, QPushButton, QSpacerItem, QSizePolicy, QMessageBox,
     QDialog, QFormLayout, QLineEdit, QDialogButtonBox,
     QTabWidget, QGridLayout, QTextEdit, QComboBox, QCheckBox,
+    QProgressBar,
 )
 
 from shared.config import get_logger, ensure_directories
@@ -44,6 +47,100 @@ except Exception:
     GLGridItem = None
 
 logger = get_logger("director")
+
+
+# ─── Ollama Setup Thread ─────────────────────────────────────────────────
+
+class OllamaSetupThread(QThread):
+    """Background thread to install Ollama and pull the Qwen model."""
+    progress = Signal(str)
+    finished = Signal()
+    error = Signal(str)
+
+    def run(self) -> None:
+        if shutil.which("ollama"):
+            self.progress.emit("Ollama уже установлен. Загрузка модели...")
+        else:
+            self.progress.emit("Нейросеть (Ollama) не установлена. Мы уже занимаемся её автоматической установкой...")
+            try:
+                subprocess.run(
+                    "curl -fsSL https://ollama.com/install.sh | sh",
+                    shell=True, check=True, capture_output=True, timeout=120,
+                )
+            except Exception as e:
+                self.error.emit(f"Не удалось установить Ollama: {e}")
+                self.finished.emit()
+                return
+
+        self.progress.emit("Ollama устанавливается, пожалуйста, подождите...")
+        try:
+            subprocess.run(
+                ["ollama", "pull", "qwen2.5-coder:3b"],
+                check=True, capture_output=True, timeout=600,
+            )
+        except Exception as e:
+            self.error.emit(f"Ошибка загрузки модели: {e}")
+
+        self.finished.emit()
+
+
+# ─── Splash Screen / Ollama Setup ────────────────────────────────────────
+
+class SplashScreenDialog(QDialog):
+    """Modal splash dialog shown while Ollama is being installed/verified."""
+
+    def __init__(self, parent=None) -> None:
+        super().__init__(parent)
+        self.setWindowTitle("Lightman")
+        self.resize(400, 150)
+        self.setModal(True)
+        self._thread: OllamaSetupThread | None = None
+        self._build_ui()
+        self._start_check()
+
+    def _build_ui(self) -> None:
+        layout = QVBoxLayout(self)
+
+        label = QLabel("⚙️  Подготовка Lightman...")
+        label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(label)
+
+        self.status_label = QLabel("")
+        self.status_label.setAlignment(Qt.AlignCenter)
+        self.status_label.setWordWrap(True)
+        layout.addWidget(self.status_label)
+
+        self.progress_bar = QProgressBar()
+        self.progress_bar.setRange(0, 0)  # indeterminate
+        self.progress_bar.setVisible(False)
+        layout.addWidget(self.progress_bar)
+
+        ok_btn = QPushButton("Готово")
+        ok_btn.setVisible(False)
+        ok_btn.clicked.connect(self.accept)
+        layout.addRow(ok_btn)
+        self._ok_btn = ok_btn
+
+    def _start_check(self) -> None:
+        self.progress_bar.setVisible(True)
+        self._thread = OllamaSetupThread()
+        self._thread.progress.connect(self._on_progress)
+        self._thread.error.connect(self._on_error)
+        self._thread.finished.connect(self._on_finished)
+        self._thread.start()
+
+    def _on_progress(self, msg: str) -> None:
+        self.status_label.setText(msg)
+
+    def _on_error(self, msg: str) -> None:
+        self.status_label.setText(f"⚠️ {msg}")
+        self.progress_bar.setVisible(False)
+        self._ok_btn.show()
+
+    def _on_finished(self) -> None:
+        self.status_label.setText("✅ Ollama готов!")
+        self.progress_bar.setVisible(False)
+        self._ok_btn.show()
 
 
 # ─── Login Dialog ────────────────────────────────────────────────────
@@ -116,6 +213,40 @@ class LoginDialog(QDialog):
 
 
 # ─── Director Main Window ────────────────────────────────────────────
+class OllamaSetupThread(QThread):
+    """Background thread that installs Ollama and pulls the Qwen model."""
+    finished = Signal()
+    error = Signal(str)
+
+    def run(self) -> None:
+        import shutil
+        import subprocess
+
+        # Check if ollama is already installed
+        if not shutil.which("ollama"):
+            self.error.emit("Ollama not found. Installing...")
+            try:
+                subprocess.run(
+                    "curl -fsSL https://ollama.com/install.sh | sh",
+                    shell=True,
+                    check=True,
+                )
+            except subprocess.CalledProcessError as e:
+                self.error.emit(f"Failed to install Ollama: {e}")
+                return
+
+        # Pull the Qwen model
+        self.error.emit("Ollama installing Qwen model...")
+        try:
+            subprocess.run(
+                ["ollama", "pull", "qwen2.5-coder:3b"],
+                check=True,
+            )
+        except subprocess.CalledProcessError as e:
+            self.error.emit(f"Failed to pull Qwen model: {e}")
+            return
+
+        self.finished.emit()
 
 class DirectorWindow(QMainWindow):
     """
