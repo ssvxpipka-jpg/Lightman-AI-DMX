@@ -2,6 +2,10 @@
 
 **[🇷🇺 Русская версия](README.md) | [🇬🇧 English version]**
 
+> [!WARNING]
+> **⚠️ ATTENTION: This is an early Beta version (v0.1.0)!**
+> This project was built overnight (in 24 hours). Currently, there are **many stubs** in the code, the UI might be a bit rough, and some features (like AI chat) are not yet connected to the real neural network. We are actively working towards a stable **v1.0 release**. Thank you for your patience and testing!
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey.svg)]()

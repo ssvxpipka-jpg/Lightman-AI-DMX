@@ -2,6 +2,10 @@
 
 **[🇷🇺 Русская версия] | [🇬🇧 English version](README_EN.md)**
 
+> [!WARNING]
+> **⚠️ ВНИМАНИЕ: Это ранняя Бета-версия (v0.1.0)!**
+> Проект написан за одну ночь (24 часа). Сейчас в коде **много заглушек**, интерфейс может быть кривоват, а некоторые функции (например, общение с ИИ) пока не подключены к реальной нейросети. Мы активно работаем над стабильным релизом **версии 1.0**. Спасибо за понимание и тестирование!
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey.svg)]()
