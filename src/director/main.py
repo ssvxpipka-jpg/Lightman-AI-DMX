@@ -31,7 +31,7 @@ from PySide6.QtWidgets import (
     QLabel, QPushButton, QSpacerItem, QSizePolicy, QMessageBox,
     QDialog, QFormLayout, QLineEdit, QDialogButtonBox,
     QTabWidget, QGridLayout, QTextEdit, QComboBox, QCheckBox,
-    QProgressBar,
+    QProgressBar, QInputDialog
 )
 
 from shared.config import get_logger, ensure_directories
@@ -282,7 +282,6 @@ class DirectorWindow(QMainWindow):
         # Apply saved language
         lang = self._profile.get("settings", {}).get("language", "en") if self._profile else "en"
         set_language(lang)
-        self._rebuild_ui_text()
 
         self._build_ui()
 
@@ -295,6 +294,8 @@ class DirectorWindow(QMainWindow):
             # Start haze monitoring if enabled
             if self.haze_checkbox.isChecked():
                 self._start_haze_monitoring()
+
+        self._rebuild_ui_text()
 
     def _center(self) -> None:
         frame = self.frameGeometry()
@@ -344,6 +345,17 @@ class DirectorWindow(QMainWindow):
         lang_action = QAction("Language", self)
         lang_action.triggered.connect(self._open_language_selector)
         view_menu.addAction(lang_action)
+
+    def _open_language_selector(self) -> None:
+        """Open a dialog to select the application language."""
+        items = ["English", "Русский"]
+        item, ok = QInputDialog.getItem(self, _("Select Language"), _("Choose a language:"), items, 0, False)
+        if ok and item:
+            if item == "English":
+                set_language("en")
+            elif item == "Русский":
+                set_language("ru")
+            self._rebuild_ui_text()
 
     def _build_chat_dock(self) -> None:
         from PySide6.QtWidgets import QDockWidget
@@ -854,6 +866,8 @@ class DirectorWindow(QMainWindow):
 
     def _rebuild_ui_text(self) -> None:
         """Rebuild UI text with current language."""
+        if not hasattr(self, 'tab_widget'):
+            return
         for i, tab_name in enumerate(self.TABS):
             self.tab_widget.setTabText(i, _(tab_name))
         self.mute_btn.setText(_("Mute"))

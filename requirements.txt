@@ -1,13 +1,10 @@
 # Lightman Core Dependencies
 PySide6
 bleak>=0.21.0
-bleson>=1.3.0
-python-zeroconf>=0.13.0
+zeroconf>=0.13.0
 pygdtf>=1.4.0
 pyqtgraph>=0.13.0
 numpy>=1.24.0
-librosa>=0.10.0
-aubio>=0.5.0
 python-osc>=1.9.0
 
 # Authentication & Storage
@@ -18,10 +15,6 @@ SQLAlchemy>=2.0.0
 
 # AI / Multi-Agent
 langgraph>=0.2.0
-chromadb>=0.4.0
-sentence-transformers>=2.2.0
-mediapipe>=0.10.0
-trafilatura>=0.7.0
 
 # Vision / Tracking
 opencv-python>=4.8.0

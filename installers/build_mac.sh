@@ -6,7 +6,6 @@ echo "=== Building Lightman for macOS ==="
 
 # Step 1: Generate assets
 echo "Step 1: Generating assets..."
-python3 scripts/generate_assets.py
 
 # Step 2: PyInstaller build
 echo "Step 2: Building with PyInstaller..."

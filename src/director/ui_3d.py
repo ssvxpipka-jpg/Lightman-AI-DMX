@@ -27,7 +27,7 @@ from pyqtgraph.opengl import (
     GLLinePlotItem,
     GLGridItem,
 )
-from pyqtgraph import MeshData
+from pyqtgraph.opengl import MeshData
 
 from shared.fixture_manager import get_fixture_manager
 
@@ -295,7 +295,7 @@ class Lightman3DView(GLViewWidget):
         # ── Floor grid (stage) ──
         grid = GLGridItem()
         grid.scale(20, 20, 1)
-        grid.setDepth(0)
+        pass  # grid.setDepth(0) removed
         self.addItem(grid)
 
         # ── Moving Heads (stage front left / right, elevated) ──
