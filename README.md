@@ -1,117 +1,80 @@
-# Lightman
+## 🎭 Lightman (Лайтман)
 
-**Stage lighting automation system for school theater**
+**[🇷🇺 Русская версия] | [🇬🇧 English version](README_EN.md)**
 
-Lightman is a comprehensive, AI-driven stage lighting control system designed for school theater productions. It connects audio input to lighting output, tracks actors via IP cameras, and orchestrates multi-agent AI coordination for intelligent light automation.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
+[![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey.svg)]()
+[![AI](https://img.shields.io/badge/AI-Local%20%2F%20Ollama-green.svg)]()
 
-## Features
+**Lightman** — это полностью бесплатная, открытая (Open Source) система автоматизации сценического света для школьных театров, небольших студий и начинающих световиков.
 
-- **Three Applications**: Director (control center), Sound (audio capture), Light (fixture control)
-- **BLE Pairing**: Secure code-based pairing between apps using HMAC-SHA256
-- **Multi-Agent AI**: 9 specialized agents powered by LangGraph
-- **IP Camera Tracking**: Human pose and object detection via MediaPipe
-- **3D Scene Visualization**: PyQtGraph OpenGL scene with fixture library
-- **RAG Knowledge Base**: ChromaDB + sentence-transformers, 5 languages, fully local
-- **Multiple Console Support**: Titan, GrandMA3/2, ChamSys, ETC Eos, QLC+
-- **Haze Analyzer**: AI reads the camera to check if there's enough smoke for beams to be visible. Tells you when to hit the hazer!
-- **Rehearsal Recording**: Playback at 2x/3x/5x speed with AI analysis
-- **Blackout Safety**: Automatic AI dimming when lights go to 0%
+Забудьте про ручное сведение лучей. Забудьте про судорожные попытки попасть в бит. ИИ возьмет рутину на себя, а вы сможете сосредоточиться на творчестве.
 
-## Quick Start
+---
 
-```bash
-# Install (requires Python 3.10+)
-bash installers/install.sh      # macOS/Linux (auto-installs Ollama + Qwen model)
-# or
-python installers/install.py    # Cross-platform (Windows, auto-installs Ollama)
+## ✨ Главные фишки
 
-# Activate virtual environment
-source venv/bin/activate        # macOS/Linux
-venv\\Scripts\\activate          # Windows
+*   🪄 **Установка "Под ключ"**: Забудьте про терминал. При первом запуске программа сама скачает и настроит локальную нейросеть (Ollama). Просто перетащите в Applications.
+*   🧠 **9 ИИ-Агентов**: Мультиагентная система (LangGraph), которая сама распределяет задачи.
+*   📹 **Трекинг в реальном времени**: Подключите старый телефон как IP-камеру (RTSP), и система будет отслеживать позы и движения актеров (YOLOv8).
+*   🎵 **Синхронизация с музыкой**: Анализ BPM, битов и спектра для создания живого света.
+*   🎬 **Режим "Сценарий"**: Загрузите `script.txt`, и ИИ будет знать, что происходит на сцене.
+*   🚨 **Правило Blackout (Святое)**: ИИ никогда не включит свет, если световик нажал Blackout.
+*   🎛️ **База приборов**: Каталог на 300+ реальных приборов (Robe, Martin, Clay Paky) с реальными DMX-каналами и углами лучей.
+*   🌫️ **Анализатор Дыма**: ИИ через камеру проверяет, видно ли лучи, и подсказывает в чате, когда пора добавить дыма.
+*   💸 **Абсолютно бесплатно**: Никаких API-ключей, подписок и скрытых платежей.
+*   🤫 **Секретная функция (Спрятана в дыму)**: *(Скрыто от случайных глаз...)* Встроенный **Анализатор Дыма** считывает картинку с камеры и подсказывает, когда лучи плохо видны. Попробуйте заглянуть в настройки. 🤫
 
-# Run the Director
-python -m src.director.main
-```
+---
 
-### PySide6 Compatibility
+## 🎛️ Три режима работы
 
-On macOS 12 (Monterey) with Python 3.14, PySide6 6.10+ may fail to install.
-The installer automatically falls back to PySide6 6.9.3 on macOS. For best
-results, use Python 3.12 on macOS 12.
+1.  **🔴 Лютый (Full Auto)**: ИИ берет **почти всё** на себя. Управляет цветами, двигает лэдбары и крутит головы под музыку.
+2.  **🟡 Умеренный (Assist)**: ИИ **добавляет живого света**. Следит за актерами, страхует вас. Делает легкие акценты на биты.
+3.  **🟢 Простой (Follow Only)**: Вы полностью рулите светом, ИИ только водит луч. **НО!** Если вы сбились с ритма, ИИ на долю секунды перехватывает **лэдбары**, чтобы долбануть по биту.
 
-## Cross-Platform
+---
 
-Lightman runs on **macOS**, **Windows**, and **Linux** using `pathlib.Path` for all file operations. Logs are written to `~/.lightman/logs/lightman.log`.
+## 🚀 Установка (За 3 минуты)
 
-## Project Structure
+**Шаг 1: Скачайте установщик**
+Скачайте файл `Lightman-Beta.dmg` из раздела **Releases** на GitHub.
 
-```
-lightman/
-├── src/
-│   ├── director/     # Main control center application
-│   ├── sound/        # Audio capture and OSC sending
-│   └── light/        # DMX/console control application
-├── shared/           # Shared modules (pairing, auth, agents, etc.)
-├── data/             # Runtime data (users.db, profiles)
-├── config/           # Configuration files (servers.yaml)
-├── vendor/           # Cloned open-source libraries (read-only)
-├── docs/             # Documentation
-├── assets/           # Icons, models, images
-├── installers/       # Installation scripts (install.sh, install.bat, install.py)
-├── fixtures_db/      # GDTF fixture definitions
-├── knowledge_base/   # RAG documents and embeddings
-├── tests/            # Unit tests
-├── deploy/           # Deployment guides
-└── .lightman_secrets/ # Private data (codes, configs)
-```
+**Шаг 2: Установите**
+Откройте скачанный файл и перетащите иконку **Lightman** в папку **Applications**.
 
-## Roadmap
+**Шаг 3: Запуск и автоустановка**
+Откройте Lightman. При первом запуске появится окно: *"Нейросеть не установлена. Устанавливаем автоматически..."* Программа сама скачает Ollama и нужную модель. Дождитесь окончания прогресс-бара!
 
-### ALPHA (Current)
-- BLE pairing between apps
-- Basic authentication and user profiles
-- Sound app with OSC output
-- Light app with console plugins
-- Director with 3D scene and studio tab
-- Multi-agent system (9 agents)
-- Basic IP camera tracking
-- Blackout safety guard
-- RAG knowledge base
+---
 
-### BETA
-- Full console integration (Titan, GrandMA3/2, ChamSys, ETC Eos, QLC+)
-- Haze/Smoke analyzer with IP camera feed monitoring
-- Console auto-discovery and fixture patching
-- Advanced pose tracking and actor light assignment
-- Real 3D beam visualization with fixture data (beam angles from catalog)
-- MIDI input/output support
-- Microphone array spatial audio
-- Ollama auto-install with qwen2.5-coder:3b model
-- AI agent chat integration with haze warnings
+## 🗺️ Планы на будущее (Roadmap)
 
-### 1.0 (Production Release)
-- Script agent with timeline comparison
-- Rehearsal recording and playback
-- Audience profiler with safety guidelines
-- Full 3D fixture visualization
-- Chat-based AI assistant
+**Этот проект создается для людей и благодаря людям.** Если вам понравится Lightman, если вы поставите звезду ⭐ и расскажете о нем друзьям, мы будем пилить его дальше:
 
-### 1.1 (Audio/MIDI Expansion)
-- MIDI control surface support
-- Live audio mixing via MIDI
-- Music library integration
-- Real-time spectrum visualization
+*   🟢 **ALPHA / BETA (Сейчас)**: Базовый интерфейс, BLE, правило Blackout, 3 режима, 3D-сцена, анализатор дыма.
+*   🟡 **Версия 1.0**: Фиксы багов, оптимизация, улучшение интерфейса.
+*   🟠 **Версия 1.5 (Следующий патч)**:
+    *   **Система профилей**: Все настройки, приборы и бэкапы сохраняются под твоим логином на устройстве.
+    *   **Рейтинг приборов**: Возможность ставить «лайки» на приборы.
+    *   **Подключение MIDI, DJ и звуковых пультов**: Управление оборудованием.
+*   🔴 **Версия 2.0 (Lightman Server OS - Полный комбайн)**:
+    *   **Двусторонняя авторизация**: Безопасное подключение по IP-адресам с белым списком.
+    *   **Гибридный сервер**: Собственная ОС на базе Linux с графическим интерфейсом.
+    *   **Режим "Страховка"**: Если ноутбук световика сломался, управляйте светом прямо с сервера.
+    *   **Управление командами (Team Management)**: Создание рабочих групп (Тим) в админ-панели сервера. Распределение ролей (Световик, Звукарь, Видеорежиссер).
+*   🌌 **Версия 5.0 (Дальнейшее будущее - Ultimate Vision)**:
+    *   **Полная система управления трансляциями и звуком**: Объединение света, звука и видео в единый экосистемный пульт.
+    *   **Умный ИИ-помощник**: Нейросеть, которая запоминает ВСЕ данные о ваших шоу и сама всё делает за вас.
+    *   **Анализ и коррекция сценария**: ИИ читает сценарий, анализирует его и предлагает правки прямо по ходу пьесы.
+    *   **Подбор музыки**: Автоматический подбор треков под настроение сцены.
+    *   **Интеграция Интеркомов**: Встроенная голосовая связь со всей командой прямо внутри Lightman.
 
-### 2.0 (Server OS)
-- Dedicated Lightman Server OS image
-- Centralized control for multi-room theaters
-- Hardware abstraction layer
-- Network-wide device discovery and management
+---
 
-## License
-
-MIT License — see [LICENSE](LICENSE).
-
-## Contributing
-
-This project is developed for a school theater program. See the [Developer Roadmap](docs/development_roadmap.md) for contribution guidelines.
+## ❤️ Поддержать автора
+Проект создавался в бешеном темпе, без бюджетов и спонсоров. Если вам понравилась разработка и вы хотите поддержать автора:
+[![DonationAlerts]https://www.donationalerts.com/r/afe1g
+## 📄 Лицензия
+Проект распространяется под лицензией **MIT**. Делай что хочешь, используй в школах и театрах.
