@@ -1,0 +1,83 @@
+# Lightman Server Configuration
+# ==============================
+# Configuration for console connections and server integrations.
+
+consoles:
+  titan:
+    type: "titan_webapi"
+    description: "Chauvet DJ Titan series via WebAPI"
+    host: ""
+    port: 80
+    api_key: ""
+    enabled: false
+
+  grandma3:
+    type: "grandma3"
+    description: "ETC / MA Lighting GrandMA3"
+    host: ""
+    port: 6000  # Default GMA3 network protocol port
+    enabled: false
+
+  grandma2:
+    type: "grandma2"
+    description: "MA Lighting GrandMA2"
+    host: ""
+    port: 6000
+    enabled: false
+
+  chamsys:
+    type: "chamsys"
+    description: "ChamSys MagicQ"
+    host: ""
+    port: 65535  # Default ChamSys network protocol port
+    enabled: false
+
+  eos:
+    type: "etc_eos"
+    description: "ETC Eos series"
+    host: ""
+    port: 1975  # Eos protocol port
+    enabled: false
+
+  qlcplus:
+    type: "qlcplus"
+    description: "Q Light Controller Plus"
+    host: ""
+    port: 49064  # QLC+ OSC/EL protocol port
+    enabled: false
+
+director:
+  rtsp_url: ""
+  osc_listen_port: 8000
+  osc_send_port: 9000
+
+sound:
+  osc_send_port: 9000
+  osc_receive_port: 8000
+  loopback_device: ""
+  sample_rate: 44100
+
+light:
+  default_universe: 1
+  dmx_baud_rate: 250000
+
+modes:
+  full_auto:
+    description: "AI takes full control; 5% standby for safety"
+    standby_level: 0.05
+  assist:
+    description: "Human in-the-loop; AI intercepts on errors > 15%"
+    intercept_threshold: 0.15
+  follow_only:
+    description: "PAN/TILT + beat only; minimal AI intervention"
+    standby_level: 0.0
+
+blackout:
+  level_0_percent:
+    ai_holds_zero: true
+  level_1_to_5_percent:
+    ai_does_not_increase: true
+  level_above_5_percent:
+    ai_works_within_limits: true
+  live_light_muted: true
+  tracking_muted: true

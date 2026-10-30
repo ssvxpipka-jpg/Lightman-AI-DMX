@@ -1,0 +1,90 @@
+[
+  {
+    "id": "titan-webapi",
+    "name": "Titan WebAPI",
+    "manufacturer": "Avolites",
+    "protocol": "HTTP REST",
+    "connection": "tcp",
+    "default_port": 4430,
+    "description": "HTTP REST API via WebAPI. Uses /titan/get/, /titan/set/, and /titan/script/ endpoints.",
+    "command_example": "http://10.0.0.1:4430/titan/script/Playbacks/FirePlaybackAtLevel?titanId=1684&level=1.0",
+    "adapter_class": "TitanAdapter"
+  },
+  {
+    "id": "gma3-osc",
+    "name": "grandMA3 OSC",
+    "manufacturer": "MA Lighting",
+    "protocol": "OSC",
+    "connection": "tcp",
+    "default_port": 8000,
+    "description": "OSC over TCP. Supports /fader/, /command/, /exec/ paths.",
+    "command_example": "/fader/page/1/fader/2/at 100",
+    "adapter_class": "GrandMA3Adapter"
+  },
+  {
+    "id": "gma2-telnet",
+    "name": "grandMA2 Telnet",
+    "manufacturer": "MA Lighting",
+    "protocol": "Telnet/MA-Network",
+    "connection": "tcp",
+    "default_port": 3000,
+    "description": "Raw TCP telnet protocol. Commands like 'At 100' followed by 'Go'.",
+    "command_example": "user@ma2> Go",
+    "adapter_class": "GrandMA2Adapter"
+  },
+  {
+    "id": "magicq-udp",
+    "name": "MagicQ UDP",
+    "manufacturer": "ChamSys",
+    "protocol": "UDP",
+    "connection": "udp",
+    "default_port": 6553,
+    "description": "UDP binary protocol on port 6553. Send hex command strings.",
+    "command_example": "01 02 03 04 (binary message format)",
+    "adapter_class": "ChamSysAdapter"
+  },
+  {
+    "id": "eos-osc",
+    "name": "Eos OSC",
+    "manufacturer": "ETC",
+    "protocol": "OSC",
+    "connection": "tcp",
+    "default_port": 3037,
+    "description": "OSC over TCP on ports 3032/3037/3038. UDP also on 8000.",
+    "command_example": "/eos/chan/1/at 100",
+    "adapter_class": "EosAdapter"
+  },
+  {
+    "id": "qlc-osc",
+    "name": "QLC+ OSC",
+    "manufacturer": "QLC+",
+    "protocol": "OSC",
+    "connection": "udp",
+    "default_port": 9938,
+    "description": "OSC input/output. Also has Web API at port 9005.",
+    "command_example": "/qlcplus/input/0/0 255",
+    "adapter_class": "QLCPlusAdapter"
+  },
+  {
+    "id": "qlc-web",
+    "name": "QLC+ Web API",
+    "manufacturer": "QLC+",
+    "protocol": "WebSocket/HTTP",
+    "connection": "tcp",
+    "default_port": 9005,
+    "description": "WebSocket-based web API. HTTP fallback on same port.",
+    "command_example": "ws://localhost:9005/api",
+    "adapter_class": "QLCPlusAdapter"
+  },
+  {
+    "id": "hog-osc",
+    "name": "Hog OS OSC",
+    "manufacturer": "Highland",
+    "protocol": "OSC",
+    "connection": "udp",
+    "default_port": 6900,
+    "description": "OSC on port 6900 for playbacks, faders, and cues.",
+    "command_example": "/hog/osc/playback/go 1",
+    "adapter_class": "HogAdapter"
+  }
+]

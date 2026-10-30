@@ -1,0 +1,5402 @@
+[
+  {
+    "id": "CP-SHARPY",
+    "manufacturer": "Clay Paky",
+    "name": "Sharpy",
+    "type": "beam",
+    "dmx_channels": 2,
+    "modes": [
+      "1ch",
+      "2ch"
+    ],
+    "beam_angle": 0.0,
+    "zoom_range": "0.0-0.0",
+    "capabilities": [
+      "ultra narrow beam",
+      "pan/tilt",
+      "color wheel",
+      "gobo"
+    ]
+  },
+  {
+    "id": "CP-AXCOR-BEAM-300",
+    "manufacturer": "Clay Paky",
+    "name": "Axcor Beam 300",
+    "type": "beam",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch",
+      "22ch"
+    ],
+    "beam_angle": 1.7,
+    "zoom_range": "1.7-60.0",
+    "capabilities": [
+      "151W white lamp",
+      "motorized zoom",
+      "color wheel",
+      "gobo",
+      "gobo wheel"
+    ]
+  },
+  {
+    "id": "CP-AXCOR-BEAM-400",
+    "manufacturer": "Clay Paky",
+    "name": "Axcor Beam 400",
+    "type": "beam",
+    "dmx_channels": 24,
+    "modes": [
+      "24ch",
+      "26ch"
+    ],
+    "beam_angle": 1.7,
+    "zoom_range": "1.7-40.0",
+    "capabilities": [
+      "200W white lamp",
+      "motorized zoom",
+      "color wheel",
+      "gobo",
+      "prism"
+    ]
+  },
+  {
+    "id": "CP-AXCOR-SPOT-400",
+    "manufacturer": "Clay Paky",
+    "name": "Axcor Spot 400",
+    "type": "spot",
+    "dmx_channels": 32,
+    "modes": [
+      "32ch",
+      "34ch",
+      "36ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0-25.0",
+    "capabilities": [
+      "250W white lamp",
+      "focus",
+      "zoom",
+      "color wheel",
+      "gobo",
+      "prism",
+      "iris"
+    ]
+  },
+  {
+    "id": "CP-SCENIUS",
+    "manufacturer": "Clay Paky",
+    "name": "Scenius",
+    "type": "wash",
+    "dmx_channels": 30,
+    "modes": [
+      "30ch",
+      "32ch"
+    ],
+    "beam_angle": 4.0,
+    "zoom_range": "4.0-40.0",
+    "capabilities": [
+      "300W LED",
+      "zoom",
+      "color mixing",
+      "gobo",
+      "prism",
+      "CRI 90"
+    ]
+  },
+  {
+    "id": "CP-SUPRASPOT",
+    "manufacturer": "Clay Paky",
+    "name": "SupraSpot",
+    "type": "spot",
+    "dmx_channels": 24,
+    "modes": [
+      "24ch",
+      "26ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0-20.0",
+    "capabilities": [
+      "250W white lamp",
+      "focus",
+      "zoom",
+      "color wheel",
+      "gobos"
+    ]
+  },
+  {
+    "id": "CP-MYTH",
+    "manufacturer": "Clay Paky",
+    "name": "Myth",
+    "type": "spot",
+    "dmx_channels": 20,
+    "modes": [
+      "20ch",
+      "22ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0-26.0",
+    "capabilities": [
+      "185W white lamp",
+      "focus",
+      "zoom",
+      "color wheel",
+      "gobo"
+    ]
+  },
+  {
+    "id": "ROBE-DP2500",
+    "manufacturer": "Robe",
+    "name": "DP-2500 Spot",
+    "type": "spot",
+    "dmx_channels": 24,
+    "modes": [
+      "24ch",
+      "26ch",
+      "28ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0-20.0",
+    "capabilities": [
+      "2500W discharge",
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus",
+      "iris"
+    ]
+  },
+  {
+    "id": "ROBE-DP4500",
+    "manufacturer": "Robe",
+    "name": "DP-4500 Spot",
+    "type": "spot",
+    "dmx_channels": 35,
+    "modes": [
+      "35ch",
+      "37ch"
+    ],
+    "beam_angle": 2.5,
+    "zoom_range": "2.5-25.0",
+    "capabilities": [
+      "4500W discharge",
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus",
+      "iris"
+    ]
+  },
+  {
+    "id": "ROBE-MEARP",
+    "manufacturer": "Robe",
+    "name": "MEArp",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 15.0,
+    "zoom_range": "10.0-60.0",
+    "capabilities": [
+      "750W LED",
+      "zoom",
+      "color mixing",
+      "CTO"
+    ]
+  },
+  {
+    "id": "ROBE-SPIIDER",
+    "manufacturer": "Robe",
+    "name": "Spiider",
+    "type": "wash",
+    "dmx_channels": 20,
+    "modes": [
+      "20ch",
+      "22ch",
+      "24ch"
+    ],
+    "beam_angle": 4.0,
+    "zoom_range": "4.0-50.0",
+    "capabilities": [
+      "151W white LED",
+      "zoom",
+      "CMY mixing",
+      "color wheel",
+      "pixel control",
+      "CTO"
+    ]
+  },
+  {
+    "id": "ROBE-MINIPOINTE",
+    "manufacturer": "Robe",
+    "name": "MiniPointe",
+    "type": "beam",
+    "dmx_channels": 24,
+    "modes": [
+      "24ch",
+      "26ch",
+      "28ch"
+    ],
+    "beam_angle": 1.0,
+    "zoom_range": "1.0-20.0",
+    "capabilities": [
+      "132W white LED",
+      "zoom",
+      "color wheel",
+      "gobo",
+      "prism"
+    ]
+  },
+  {
+    "id": "ROBE-MEGAPOINTE",
+    "manufacturer": "Robe",
+    "name": "MegaPointe",
+    "type": "spot",
+    "dmx_channels": 35,
+    "modes": [
+      "35ch",
+      "37ch",
+      "41ch"
+    ],
+    "beam_angle": 1.0,
+    "zoom_range": "1.0-60.0",
+    "capabilities": [
+      "470W white LED",
+      "zoom",
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus",
+      "iris"
+    ]
+  },
+  {
+    "id": "ROBE-LEDWASH-1000",
+    "manufacturer": "Robe",
+    "name": "LEDWash 1000",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch",
+      "20ch"
+    ],
+    "beam_angle": 20.0,
+    "zoom_range": "6.0-40.0",
+    "capabilities": [
+      "1000W LED",
+      "zoom",
+      "CMY mixing",
+      "color wheel",
+      "CTO"
+    ]
+  },
+  {
+    "id": "MARTIN-MAQUANTUM",
+    "manufacturer": "Martin",
+    "name": "MAC Quantum Wash",
+    "type": "wash",
+    "dmx_channels": 30,
+    "modes": [
+      "30ch",
+      "32ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "5.0-75.0",
+    "capabilities": [
+      "800W LED",
+      "zoom",
+      "CMY mixing",
+      "color wheel",
+      "CTO",
+      "frost"
+    ]
+  },
+  {
+    "id": "MARTIN-MAQUANTUM-W",
+    "manufacturer": "Martin",
+    "name": "MAC Quantum Wash 500",
+    "type": "wash",
+    "dmx_channels": 24,
+    "modes": [
+      "24ch",
+      "26ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "5.0-65.0",
+    "capabilities": [
+      "500W LED",
+      "zoom",
+      "CMY mixing",
+      "color wheel",
+      "CTO"
+    ]
+  },
+  {
+    "id": "MARTIN-VIPER",
+    "manufacturer": "Martin",
+    "name": "MAC Viper",
+    "type": "spot",
+    "dmx_channels": 36,
+    "modes": [
+      "36ch",
+      "38ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0-40.0",
+    "capabilities": [
+      "1000W discharge",
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus",
+      "iris"
+    ]
+  },
+  {
+    "id": "MARTIN-AURA",
+    "manufacturer": "Martin",
+    "name": "MAC Aura",
+    "type": "wash",
+    "dmx_channels": 18,
+    "modes": [
+      "18ch",
+      "20ch"
+    ],
+    "beam_angle": 11.0,
+    "zoom_range": "11.0-53.0",
+    "capabilities": [
+      "750W LED",
+      "CMY mixing",
+      "color wheel",
+      "pixel control",
+      "CTO"
+    ]
+  },
+  {
+    "id": "MARTIN-ENCUE",
+    "manufacturer": "Martin",
+    "name": "MAC Encore",
+    "type": "wash",
+    "dmx_channels": 36,
+    "modes": [
+      "36ch",
+      "38ch",
+      "40ch"
+    ],
+    "beam_angle": 3.0,
+    "zoom_range": "3.0-45.0",
+    "capabilities": [
+      "1500W LED",
+      "zoom",
+      "CMY mixing",
+      "color wheel",
+      "CTO",
+      "frost",
+      "CRI 95"
+    ]
+  },
+  {
+    "id": "VL-VL3500",
+    "manufacturer": "Vari-Lite",
+    "name": "VL3500 Spot",
+    "type": "spot",
+    "dmx_channels": 31,
+    "modes": [
+      "31ch",
+      "33ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0-30.0",
+    "capabilities": [
+      "1500W discharge",
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus",
+      "iris"
+    ]
+  },
+  {
+    "id": "VL-VL4400",
+    "manufacturer": "Vari-Lite",
+    "name": "VL4400 Spot",
+    "type": "spot",
+    "dmx_channels": 31,
+    "modes": [
+      "31ch",
+      "33ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0-30.0",
+    "capabilities": [
+      "1500W discharge",
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus",
+      "iris"
+    ]
+  },
+  {
+    "id": "VL-VL6500",
+    "manufacturer": "Vari-Lite",
+    "name": "VL6500 Spot",
+    "type": "spot",
+    "dmx_channels": 49,
+    "modes": [
+      "49ch",
+      "53ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0-30.0",
+    "capabilities": [
+      "1700W discharge",
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus",
+      "iris"
+    ]
+  },
+  {
+    "id": "CHAUVET-OVATION",
+    "manufacturer": "Chauvet Pro",
+    "name": "Ovation F-950",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 25.0,
+    "zoom_range": "15.0-40.0",
+    "capabilities": [
+      "950W LED",
+      "CMY mixing",
+      "color wheel",
+      "zoom",
+      "CRI 90"
+    ]
+  },
+  {
+    "id": "CHAUVET-Rogue",
+    "manufacturer": "Chauvet Pro",
+    "name": "Rogue R2 Spot",
+    "type": "spot",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0-25.0",
+    "capabilities": [
+      "200W LED",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ELATION-ECL",
+    "manufacturer": "Elation",
+    "name": "Platinum Spot Pro",
+    "type": "spot",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch",
+      "20ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0-25.0",
+    "capabilities": [
+      "250W LED",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus",
+      "iris"
+    ]
+  },
+  {
+    "id": "ELATION-RAYZOR",
+    "manufacturer": "Elation",
+    "name": "Rayzor 360",
+    "type": "wash",
+    "dmx_channels": 18,
+    "modes": [
+      "18ch",
+      "20ch"
+    ],
+    "beam_angle": 6.0,
+    "zoom_range": "6.0-30.0",
+    "capabilities": [
+      "360 LED pixels",
+      "pan/tilt",
+      "RGB",
+      "pixel control"
+    ]
+  },
+  {
+    "id": "ADJ-VIZI",
+    "manufacturer": "ADJ",
+    "name": "Vizi Beam 260",
+    "type": "beam",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 1.0,
+    "zoom_range": "1.0-20.0",
+    "capabilities": [
+      "260W LED",
+      "zoom",
+      "color wheel",
+      "gobo",
+      "prism"
+    ]
+  },
+  {
+    "id": "GENERIC-PAR",
+    "manufacturer": "Generic",
+    "name": "PAR64 LED",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 25.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "strobe"
+    ]
+  },
+  {
+    "id": "GENERIC-LASER",
+    "manufacturer": "Pangolin",
+    "name": "QuickShow",
+    "type": "laser",
+    "dmx_channels": 32,
+    "modes": [
+      "32ch"
+    ],
+    "beam_angle": 0.0,
+    "zoom_range": "0.0-0.0",
+    "capabilities": [
+      "RGB laser",
+      "ILDA",
+      "DMX",
+      "TTL"
+    ]
+  },
+  {
+    "id": "ROBE-LEDWASH-1",
+    "manufacturer": "Robe",
+    "name": "LEDWash 1",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 20.0,
+    "zoom_range": "20.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ROBE-LEDWASH-2",
+    "manufacturer": "Robe",
+    "name": "LEDWash 2",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 20.0,
+    "zoom_range": "20.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ROBE-LEDWASH-3",
+    "manufacturer": "Robe",
+    "name": "LEDWash 3",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 20.0,
+    "zoom_range": "20.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ROBE-LEDWASH-4",
+    "manufacturer": "Robe",
+    "name": "LEDWash 4",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 20.0,
+    "zoom_range": "20.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ROBE-LEDWASH-5",
+    "manufacturer": "Robe",
+    "name": "LEDWash 5",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 20.0,
+    "zoom_range": "20.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ROBE-LEDWASH-6",
+    "manufacturer": "Robe",
+    "name": "LEDWash 6",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 20.0,
+    "zoom_range": "20.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ROBE-LEDWASH-7",
+    "manufacturer": "Robe",
+    "name": "LEDWash 7",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 20.0,
+    "zoom_range": "20.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ROBE-LEDWASH-8",
+    "manufacturer": "Robe",
+    "name": "LEDWash 8",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 20.0,
+    "zoom_range": "20.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ROBE-LEDWASH-9",
+    "manufacturer": "Robe",
+    "name": "LEDWash 9",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 20.0,
+    "zoom_range": "20.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ROBE-LEDWASH-10",
+    "manufacturer": "Robe",
+    "name": "LEDWash 10",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 20.0,
+    "zoom_range": "20.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ROBE-LEDWASH-11",
+    "manufacturer": "Robe",
+    "name": "LEDWash 11",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 20.0,
+    "zoom_range": "20.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ROBE-LEDWASH-12",
+    "manufacturer": "Robe",
+    "name": "LEDWash 12",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 20.0,
+    "zoom_range": "20.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ROBE-LEDWASH-13",
+    "manufacturer": "Robe",
+    "name": "LEDWash 13",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 20.0,
+    "zoom_range": "20.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ROBE-LEDWASH-14",
+    "manufacturer": "Robe",
+    "name": "LEDWash 14",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 20.0,
+    "zoom_range": "20.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "MART-MACAXIOM-1",
+    "manufacturer": "Martin",
+    "name": "MAC Axiom 1",
+    "type": "hybrid",
+    "dmx_channels": 33,
+    "modes": [
+      "33ch",
+      "35ch"
+    ],
+    "beam_angle": 1.0,
+    "zoom_range": "1.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "MART-MACAXIOM-2",
+    "manufacturer": "Martin",
+    "name": "MAC Axiom 2",
+    "type": "hybrid",
+    "dmx_channels": 33,
+    "modes": [
+      "33ch",
+      "35ch"
+    ],
+    "beam_angle": 1.0,
+    "zoom_range": "1.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "MART-MACAXIOM-3",
+    "manufacturer": "Martin",
+    "name": "MAC Axiom 3",
+    "type": "hybrid",
+    "dmx_channels": 33,
+    "modes": [
+      "33ch",
+      "35ch"
+    ],
+    "beam_angle": 1.0,
+    "zoom_range": "1.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "MART-MACAXIOM-4",
+    "manufacturer": "Martin",
+    "name": "MAC Axiom 4",
+    "type": "hybrid",
+    "dmx_channels": 33,
+    "modes": [
+      "33ch",
+      "35ch"
+    ],
+    "beam_angle": 1.0,
+    "zoom_range": "1.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "MART-MACAXIOM-5",
+    "manufacturer": "Martin",
+    "name": "MAC Axiom 5",
+    "type": "hybrid",
+    "dmx_channels": 33,
+    "modes": [
+      "33ch",
+      "35ch"
+    ],
+    "beam_angle": 1.0,
+    "zoom_range": "1.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "MART-MACAXIOM-6",
+    "manufacturer": "Martin",
+    "name": "MAC Axiom 6",
+    "type": "hybrid",
+    "dmx_channels": 33,
+    "modes": [
+      "33ch",
+      "35ch"
+    ],
+    "beam_angle": 1.0,
+    "zoom_range": "1.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "MART-MACAXIOM-7",
+    "manufacturer": "Martin",
+    "name": "MAC Axiom 7",
+    "type": "hybrid",
+    "dmx_channels": 33,
+    "modes": [
+      "33ch",
+      "35ch"
+    ],
+    "beam_angle": 1.0,
+    "zoom_range": "1.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "MART-MACAXIOM-8",
+    "manufacturer": "Martin",
+    "name": "MAC Axiom 8",
+    "type": "hybrid",
+    "dmx_channels": 33,
+    "modes": [
+      "33ch",
+      "35ch"
+    ],
+    "beam_angle": 1.0,
+    "zoom_range": "1.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "MART-MACAXIOM-9",
+    "manufacturer": "Martin",
+    "name": "MAC Axiom 9",
+    "type": "hybrid",
+    "dmx_channels": 33,
+    "modes": [
+      "33ch",
+      "35ch"
+    ],
+    "beam_angle": 1.0,
+    "zoom_range": "1.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "MART-MACAXIOM-10",
+    "manufacturer": "Martin",
+    "name": "MAC Axiom 10",
+    "type": "hybrid",
+    "dmx_channels": 33,
+    "modes": [
+      "33ch",
+      "35ch"
+    ],
+    "beam_angle": 1.0,
+    "zoom_range": "1.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "MART-MACAXIOM-11",
+    "manufacturer": "Martin",
+    "name": "MAC Axiom 11",
+    "type": "hybrid",
+    "dmx_channels": 33,
+    "modes": [
+      "33ch",
+      "35ch"
+    ],
+    "beam_angle": 1.0,
+    "zoom_range": "1.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "MART-MACAXIOM-12",
+    "manufacturer": "Martin",
+    "name": "MAC Axiom 12",
+    "type": "hybrid",
+    "dmx_channels": 33,
+    "modes": [
+      "33ch",
+      "35ch"
+    ],
+    "beam_angle": 1.0,
+    "zoom_range": "1.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "MART-MACAXIOM-13",
+    "manufacturer": "Martin",
+    "name": "MAC Axiom 13",
+    "type": "hybrid",
+    "dmx_channels": 33,
+    "modes": [
+      "33ch",
+      "35ch"
+    ],
+    "beam_angle": 1.0,
+    "zoom_range": "1.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "MART-MACAXIOM-14",
+    "manufacturer": "Martin",
+    "name": "MAC Axiom 14",
+    "type": "hybrid",
+    "dmx_channels": 33,
+    "modes": [
+      "33ch",
+      "35ch"
+    ],
+    "beam_angle": 1.0,
+    "zoom_range": "1.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CLAY-ALPHASPOT-1",
+    "manufacturer": "Clay Paky",
+    "name": "Alpha Spot 1",
+    "type": "spot",
+    "dmx_channels": 24,
+    "modes": [
+      "24ch",
+      "26ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CLAY-ALPHASPOT-2",
+    "manufacturer": "Clay Paky",
+    "name": "Alpha Spot 2",
+    "type": "spot",
+    "dmx_channels": 24,
+    "modes": [
+      "24ch",
+      "26ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CLAY-ALPHASPOT-3",
+    "manufacturer": "Clay Paky",
+    "name": "Alpha Spot 3",
+    "type": "spot",
+    "dmx_channels": 24,
+    "modes": [
+      "24ch",
+      "26ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CLAY-ALPHASPOT-4",
+    "manufacturer": "Clay Paky",
+    "name": "Alpha Spot 4",
+    "type": "spot",
+    "dmx_channels": 24,
+    "modes": [
+      "24ch",
+      "26ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CLAY-ALPHASPOT-5",
+    "manufacturer": "Clay Paky",
+    "name": "Alpha Spot 5",
+    "type": "spot",
+    "dmx_channels": 24,
+    "modes": [
+      "24ch",
+      "26ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CLAY-ALPHASPOT-6",
+    "manufacturer": "Clay Paky",
+    "name": "Alpha Spot 6",
+    "type": "spot",
+    "dmx_channels": 24,
+    "modes": [
+      "24ch",
+      "26ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CLAY-ALPHASPOT-7",
+    "manufacturer": "Clay Paky",
+    "name": "Alpha Spot 7",
+    "type": "spot",
+    "dmx_channels": 24,
+    "modes": [
+      "24ch",
+      "26ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CLAY-ALPHASPOT-8",
+    "manufacturer": "Clay Paky",
+    "name": "Alpha Spot 8",
+    "type": "spot",
+    "dmx_channels": 24,
+    "modes": [
+      "24ch",
+      "26ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CLAY-ALPHASPOT-9",
+    "manufacturer": "Clay Paky",
+    "name": "Alpha Spot 9",
+    "type": "spot",
+    "dmx_channels": 24,
+    "modes": [
+      "24ch",
+      "26ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CLAY-ALPHASPOT-10",
+    "manufacturer": "Clay Paky",
+    "name": "Alpha Spot 10",
+    "type": "spot",
+    "dmx_channels": 24,
+    "modes": [
+      "24ch",
+      "26ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CLAY-ALPHASPOT-11",
+    "manufacturer": "Clay Paky",
+    "name": "Alpha Spot 11",
+    "type": "spot",
+    "dmx_channels": 24,
+    "modes": [
+      "24ch",
+      "26ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CLAY-ALPHASPOT-12",
+    "manufacturer": "Clay Paky",
+    "name": "Alpha Spot 12",
+    "type": "spot",
+    "dmx_channels": 24,
+    "modes": [
+      "24ch",
+      "26ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CLAY-ALPHASPOT-13",
+    "manufacturer": "Clay Paky",
+    "name": "Alpha Spot 13",
+    "type": "spot",
+    "dmx_channels": 24,
+    "modes": [
+      "24ch",
+      "26ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CLAY-ALPHASPOT-14",
+    "manufacturer": "Clay Paky",
+    "name": "Alpha Spot 14",
+    "type": "spot",
+    "dmx_channels": 24,
+    "modes": [
+      "24ch",
+      "26ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CHAU-ROGUER1-1",
+    "manufacturer": "Chauvet Pro",
+    "name": "Rogue R1 1",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CHAU-ROGUER1-2",
+    "manufacturer": "Chauvet Pro",
+    "name": "Rogue R1 2",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CHAU-ROGUER1-3",
+    "manufacturer": "Chauvet Pro",
+    "name": "Rogue R1 3",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CHAU-ROGUER1-4",
+    "manufacturer": "Chauvet Pro",
+    "name": "Rogue R1 4",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CHAU-ROGUER1-5",
+    "manufacturer": "Chauvet Pro",
+    "name": "Rogue R1 5",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CHAU-ROGUER1-6",
+    "manufacturer": "Chauvet Pro",
+    "name": "Rogue R1 6",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CHAU-ROGUER1-7",
+    "manufacturer": "Chauvet Pro",
+    "name": "Rogue R1 7",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CHAU-ROGUER1-8",
+    "manufacturer": "Chauvet Pro",
+    "name": "Rogue R1 8",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CHAU-ROGUER1-9",
+    "manufacturer": "Chauvet Pro",
+    "name": "Rogue R1 9",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CHAU-ROGUER1-10",
+    "manufacturer": "Chauvet Pro",
+    "name": "Rogue R1 10",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CHAU-ROGUER1-11",
+    "manufacturer": "Chauvet Pro",
+    "name": "Rogue R1 11",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CHAU-ROGUER1-12",
+    "manufacturer": "Chauvet Pro",
+    "name": "Rogue R1 12",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CHAU-ROGUER1-13",
+    "manufacturer": "Chauvet Pro",
+    "name": "Rogue R1 13",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "CHAU-ROGUER1-14",
+    "manufacturer": "Chauvet Pro",
+    "name": "Rogue R1 14",
+    "type": "wash",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ELAT-PLATINUMSPOT-1",
+    "manufacturer": "Elation",
+    "name": "Platinum Spot 1",
+    "type": "spot",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ELAT-PLATINUMSPOT-2",
+    "manufacturer": "Elation",
+    "name": "Platinum Spot 2",
+    "type": "spot",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ELAT-PLATINUMSPOT-3",
+    "manufacturer": "Elation",
+    "name": "Platinum Spot 3",
+    "type": "spot",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ELAT-PLATINUMSPOT-4",
+    "manufacturer": "Elation",
+    "name": "Platinum Spot 4",
+    "type": "spot",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ELAT-PLATINUMSPOT-5",
+    "manufacturer": "Elation",
+    "name": "Platinum Spot 5",
+    "type": "spot",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ELAT-PLATINUMSPOT-6",
+    "manufacturer": "Elation",
+    "name": "Platinum Spot 6",
+    "type": "spot",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ELAT-PLATINUMSPOT-7",
+    "manufacturer": "Elation",
+    "name": "Platinum Spot 7",
+    "type": "spot",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ELAT-PLATINUMSPOT-8",
+    "manufacturer": "Elation",
+    "name": "Platinum Spot 8",
+    "type": "spot",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ELAT-PLATINUMSPOT-9",
+    "manufacturer": "Elation",
+    "name": "Platinum Spot 9",
+    "type": "spot",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ELAT-PLATINUMSPOT-10",
+    "manufacturer": "Elation",
+    "name": "Platinum Spot 10",
+    "type": "spot",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ELAT-PLATINUMSPOT-11",
+    "manufacturer": "Elation",
+    "name": "Platinum Spot 11",
+    "type": "spot",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ELAT-PLATINUMSPOT-12",
+    "manufacturer": "Elation",
+    "name": "Platinum Spot 12",
+    "type": "spot",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ELAT-PLATINUMSPOT-13",
+    "manufacturer": "Elation",
+    "name": "Platinum Spot 13",
+    "type": "spot",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "ELAT-PLATINUMSPOT-14",
+    "manufacturer": "Elation",
+    "name": "Platinum Spot 14",
+    "type": "spot",
+    "dmx_channels": 16,
+    "modes": [
+      "16ch",
+      "18ch"
+    ],
+    "beam_angle": 2.0,
+    "zoom_range": "2.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "VARI-VL2600-1",
+    "manufacturer": "Vari-Lite",
+    "name": "VL2600 1",
+    "type": "wash",
+    "dmx_channels": 31,
+    "modes": [
+      "31ch",
+      "33ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "VARI-VL2600-2",
+    "manufacturer": "Vari-Lite",
+    "name": "VL2600 2",
+    "type": "wash",
+    "dmx_channels": 31,
+    "modes": [
+      "31ch",
+      "33ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "VARI-VL2600-3",
+    "manufacturer": "Vari-Lite",
+    "name": "VL2600 3",
+    "type": "wash",
+    "dmx_channels": 31,
+    "modes": [
+      "31ch",
+      "33ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "VARI-VL2600-4",
+    "manufacturer": "Vari-Lite",
+    "name": "VL2600 4",
+    "type": "wash",
+    "dmx_channels": 31,
+    "modes": [
+      "31ch",
+      "33ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "VARI-VL2600-5",
+    "manufacturer": "Vari-Lite",
+    "name": "VL2600 5",
+    "type": "wash",
+    "dmx_channels": 31,
+    "modes": [
+      "31ch",
+      "33ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "VARI-VL2600-6",
+    "manufacturer": "Vari-Lite",
+    "name": "VL2600 6",
+    "type": "wash",
+    "dmx_channels": 31,
+    "modes": [
+      "31ch",
+      "33ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "VARI-VL2600-7",
+    "manufacturer": "Vari-Lite",
+    "name": "VL2600 7",
+    "type": "wash",
+    "dmx_channels": 31,
+    "modes": [
+      "31ch",
+      "33ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "VARI-VL2600-8",
+    "manufacturer": "Vari-Lite",
+    "name": "VL2600 8",
+    "type": "wash",
+    "dmx_channels": 31,
+    "modes": [
+      "31ch",
+      "33ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "VARI-VL2600-9",
+    "manufacturer": "Vari-Lite",
+    "name": "VL2600 9",
+    "type": "wash",
+    "dmx_channels": 31,
+    "modes": [
+      "31ch",
+      "33ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "VARI-VL2600-10",
+    "manufacturer": "Vari-Lite",
+    "name": "VL2600 10",
+    "type": "wash",
+    "dmx_channels": 31,
+    "modes": [
+      "31ch",
+      "33ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "VARI-VL2600-11",
+    "manufacturer": "Vari-Lite",
+    "name": "VL2600 11",
+    "type": "wash",
+    "dmx_channels": 31,
+    "modes": [
+      "31ch",
+      "33ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "VARI-VL2600-12",
+    "manufacturer": "Vari-Lite",
+    "name": "VL2600 12",
+    "type": "wash",
+    "dmx_channels": 31,
+    "modes": [
+      "31ch",
+      "33ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "VARI-VL2600-13",
+    "manufacturer": "Vari-Lite",
+    "name": "VL2600 13",
+    "type": "wash",
+    "dmx_channels": 31,
+    "modes": [
+      "31ch",
+      "33ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "VARI-VL2600-14",
+    "manufacturer": "Vari-Lite",
+    "name": "VL2600 14",
+    "type": "wash",
+    "dmx_channels": 31,
+    "modes": [
+      "31ch",
+      "33ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "10.0+30.0",
+    "capabilities": [
+      "CMY mixing",
+      "color wheel",
+      "gobo",
+      "prism",
+      "focus"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-001",
+    "manufacturer": "Generic",
+    "name": "LED Par 1",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 26.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-002",
+    "manufacturer": "Generic",
+    "name": "LED Par 2",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 27.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-003",
+    "manufacturer": "Generic",
+    "name": "LED Par 3",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 28.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-004",
+    "manufacturer": "Generic",
+    "name": "LED Par 4",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 29.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-005",
+    "manufacturer": "Generic",
+    "name": "LED Par 5",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 30.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-006",
+    "manufacturer": "Generic",
+    "name": "LED Par 6",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 31.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-007",
+    "manufacturer": "Generic",
+    "name": "LED Par 7",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 32.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-008",
+    "manufacturer": "Generic",
+    "name": "LED Par 8",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 33.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-009",
+    "manufacturer": "Generic",
+    "name": "LED Par 9",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 34.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-010",
+    "manufacturer": "Generic",
+    "name": "LED Par 10",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 25.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-011",
+    "manufacturer": "Generic",
+    "name": "LED Par 11",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 26.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-012",
+    "manufacturer": "Generic",
+    "name": "LED Par 12",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 27.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-013",
+    "manufacturer": "Generic",
+    "name": "LED Par 13",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 28.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-014",
+    "manufacturer": "Generic",
+    "name": "LED Par 14",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 29.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-015",
+    "manufacturer": "Generic",
+    "name": "LED Par 15",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 30.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-016",
+    "manufacturer": "Generic",
+    "name": "LED Par 16",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 31.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-017",
+    "manufacturer": "Generic",
+    "name": "LED Par 17",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 32.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-018",
+    "manufacturer": "Generic",
+    "name": "LED Par 18",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 33.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-019",
+    "manufacturer": "Generic",
+    "name": "LED Par 19",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 34.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-020",
+    "manufacturer": "Generic",
+    "name": "LED Par 20",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 25.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-021",
+    "manufacturer": "Generic",
+    "name": "LED Par 21",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 26.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-022",
+    "manufacturer": "Generic",
+    "name": "LED Par 22",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 27.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-023",
+    "manufacturer": "Generic",
+    "name": "LED Par 23",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 28.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-024",
+    "manufacturer": "Generic",
+    "name": "LED Par 24",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 29.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-025",
+    "manufacturer": "Generic",
+    "name": "LED Par 25",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 30.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-026",
+    "manufacturer": "Generic",
+    "name": "LED Par 26",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 31.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-027",
+    "manufacturer": "Generic",
+    "name": "LED Par 27",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 32.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-028",
+    "manufacturer": "Generic",
+    "name": "LED Par 28",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 33.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-029",
+    "manufacturer": "Generic",
+    "name": "LED Par 29",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 34.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-030",
+    "manufacturer": "Generic",
+    "name": "LED Par 30",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 25.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-031",
+    "manufacturer": "Generic",
+    "name": "LED Par 31",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 26.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-032",
+    "manufacturer": "Generic",
+    "name": "LED Par 32",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 27.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-033",
+    "manufacturer": "Generic",
+    "name": "LED Par 33",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 28.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-034",
+    "manufacturer": "Generic",
+    "name": "LED Par 34",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 29.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-035",
+    "manufacturer": "Generic",
+    "name": "LED Par 35",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 30.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-036",
+    "manufacturer": "Generic",
+    "name": "LED Par 36",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 31.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-037",
+    "manufacturer": "Generic",
+    "name": "LED Par 37",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 32.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-038",
+    "manufacturer": "Generic",
+    "name": "LED Par 38",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 33.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-039",
+    "manufacturer": "Generic",
+    "name": "LED Par 39",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 34.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-040",
+    "manufacturer": "Generic",
+    "name": "LED Par 40",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 25.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-041",
+    "manufacturer": "Generic",
+    "name": "LED Par 41",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 26.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-042",
+    "manufacturer": "Generic",
+    "name": "LED Par 42",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 27.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-043",
+    "manufacturer": "Generic",
+    "name": "LED Par 43",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 28.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-044",
+    "manufacturer": "Generic",
+    "name": "LED Par 44",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 29.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-045",
+    "manufacturer": "Generic",
+    "name": "LED Par 45",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 30.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-046",
+    "manufacturer": "Generic",
+    "name": "LED Par 46",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 31.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-047",
+    "manufacturer": "Generic",
+    "name": "LED Par 47",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 32.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-048",
+    "manufacturer": "Generic",
+    "name": "LED Par 48",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 33.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-049",
+    "manufacturer": "Generic",
+    "name": "LED Par 49",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 34.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-050",
+    "manufacturer": "Generic",
+    "name": "LED Par 50",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 25.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-051",
+    "manufacturer": "Generic",
+    "name": "LED Par 51",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 26.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-052",
+    "manufacturer": "Generic",
+    "name": "LED Par 52",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 27.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-053",
+    "manufacturer": "Generic",
+    "name": "LED Par 53",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 28.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-054",
+    "manufacturer": "Generic",
+    "name": "LED Par 54",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 29.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-055",
+    "manufacturer": "Generic",
+    "name": "LED Par 55",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 30.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-056",
+    "manufacturer": "Generic",
+    "name": "LED Par 56",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 31.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-057",
+    "manufacturer": "Generic",
+    "name": "LED Par 57",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 32.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-058",
+    "manufacturer": "Generic",
+    "name": "LED Par 58",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 33.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-059",
+    "manufacturer": "Generic",
+    "name": "LED Par 59",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 34.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-060",
+    "manufacturer": "Generic",
+    "name": "LED Par 60",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 25.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-061",
+    "manufacturer": "Generic",
+    "name": "LED Par 61",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 26.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-062",
+    "manufacturer": "Generic",
+    "name": "LED Par 62",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 27.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-063",
+    "manufacturer": "Generic",
+    "name": "LED Par 63",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 28.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-064",
+    "manufacturer": "Generic",
+    "name": "LED Par 64",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 29.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-065",
+    "manufacturer": "Generic",
+    "name": "LED Par 65",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 30.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-066",
+    "manufacturer": "Generic",
+    "name": "LED Par 66",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 31.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-067",
+    "manufacturer": "Generic",
+    "name": "LED Par 67",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 32.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-068",
+    "manufacturer": "Generic",
+    "name": "LED Par 68",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 33.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-069",
+    "manufacturer": "Generic",
+    "name": "LED Par 69",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 34.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-070",
+    "manufacturer": "Generic",
+    "name": "LED Par 70",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 25.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-071",
+    "manufacturer": "Generic",
+    "name": "LED Par 71",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 26.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-072",
+    "manufacturer": "Generic",
+    "name": "LED Par 72",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 27.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-073",
+    "manufacturer": "Generic",
+    "name": "LED Par 73",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 28.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-074",
+    "manufacturer": "Generic",
+    "name": "LED Par 74",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 29.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-075",
+    "manufacturer": "Generic",
+    "name": "LED Par 75",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 30.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-076",
+    "manufacturer": "Generic",
+    "name": "LED Par 76",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 31.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-077",
+    "manufacturer": "Generic",
+    "name": "LED Par 77",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 32.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-078",
+    "manufacturer": "Generic",
+    "name": "LED Par 78",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 33.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-079",
+    "manufacturer": "Generic",
+    "name": "LED Par 79",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 34.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-080",
+    "manufacturer": "Generic",
+    "name": "LED Par 80",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 25.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-081",
+    "manufacturer": "Generic",
+    "name": "LED Par 81",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 26.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-082",
+    "manufacturer": "Generic",
+    "name": "LED Par 82",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 27.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-083",
+    "manufacturer": "Generic",
+    "name": "LED Par 83",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 28.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-084",
+    "manufacturer": "Generic",
+    "name": "LED Par 84",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 29.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-085",
+    "manufacturer": "Generic",
+    "name": "LED Par 85",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 30.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-086",
+    "manufacturer": "Generic",
+    "name": "LED Par 86",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 31.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-087",
+    "manufacturer": "Generic",
+    "name": "LED Par 87",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 32.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-088",
+    "manufacturer": "Generic",
+    "name": "LED Par 88",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 33.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-LED-089",
+    "manufacturer": "Generic",
+    "name": "LED Par 89",
+    "type": "par",
+    "dmx_channels": 6,
+    "modes": [
+      "6ch",
+      "8ch"
+    ],
+    "beam_angle": 34.0,
+    "zoom_range": "N/A",
+    "capabilities": [
+      "RGB",
+      "dimmer"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-001",
+    "manufacturer": "Generic",
+    "name": "LED Wash 1",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 11.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-002",
+    "manufacturer": "Generic",
+    "name": "LED Wash 2",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 12.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-003",
+    "manufacturer": "Generic",
+    "name": "LED Wash 3",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 13.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-004",
+    "manufacturer": "Generic",
+    "name": "LED Wash 4",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 14.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-005",
+    "manufacturer": "Generic",
+    "name": "LED Wash 5",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 15.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-006",
+    "manufacturer": "Generic",
+    "name": "LED Wash 6",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 16.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-007",
+    "manufacturer": "Generic",
+    "name": "LED Wash 7",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 17.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-008",
+    "manufacturer": "Generic",
+    "name": "LED Wash 8",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 18.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-009",
+    "manufacturer": "Generic",
+    "name": "LED Wash 9",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 19.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-010",
+    "manufacturer": "Generic",
+    "name": "LED Wash 10",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 20.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-011",
+    "manufacturer": "Generic",
+    "name": "LED Wash 11",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 21.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-012",
+    "manufacturer": "Generic",
+    "name": "LED Wash 12",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 22.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-013",
+    "manufacturer": "Generic",
+    "name": "LED Wash 13",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 23.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-014",
+    "manufacturer": "Generic",
+    "name": "LED Wash 14",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 24.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-015",
+    "manufacturer": "Generic",
+    "name": "LED Wash 15",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 25.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-016",
+    "manufacturer": "Generic",
+    "name": "LED Wash 16",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 26.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-017",
+    "manufacturer": "Generic",
+    "name": "LED Wash 17",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 27.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-018",
+    "manufacturer": "Generic",
+    "name": "LED Wash 18",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 28.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-019",
+    "manufacturer": "Generic",
+    "name": "LED Wash 19",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 29.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-020",
+    "manufacturer": "Generic",
+    "name": "LED Wash 20",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-021",
+    "manufacturer": "Generic",
+    "name": "LED Wash 21",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 11.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-022",
+    "manufacturer": "Generic",
+    "name": "LED Wash 22",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 12.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-023",
+    "manufacturer": "Generic",
+    "name": "LED Wash 23",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 13.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-024",
+    "manufacturer": "Generic",
+    "name": "LED Wash 24",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 14.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-025",
+    "manufacturer": "Generic",
+    "name": "LED Wash 25",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 15.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-026",
+    "manufacturer": "Generic",
+    "name": "LED Wash 26",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 16.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-027",
+    "manufacturer": "Generic",
+    "name": "LED Wash 27",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 17.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-028",
+    "manufacturer": "Generic",
+    "name": "LED Wash 28",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 18.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-029",
+    "manufacturer": "Generic",
+    "name": "LED Wash 29",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 19.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-030",
+    "manufacturer": "Generic",
+    "name": "LED Wash 30",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 20.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-031",
+    "manufacturer": "Generic",
+    "name": "LED Wash 31",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 21.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-032",
+    "manufacturer": "Generic",
+    "name": "LED Wash 32",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 22.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-033",
+    "manufacturer": "Generic",
+    "name": "LED Wash 33",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 23.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-034",
+    "manufacturer": "Generic",
+    "name": "LED Wash 34",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 24.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-035",
+    "manufacturer": "Generic",
+    "name": "LED Wash 35",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 25.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-036",
+    "manufacturer": "Generic",
+    "name": "LED Wash 36",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 26.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-037",
+    "manufacturer": "Generic",
+    "name": "LED Wash 37",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 27.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-038",
+    "manufacturer": "Generic",
+    "name": "LED Wash 38",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 28.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-039",
+    "manufacturer": "Generic",
+    "name": "LED Wash 39",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 29.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-040",
+    "manufacturer": "Generic",
+    "name": "LED Wash 40",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-041",
+    "manufacturer": "Generic",
+    "name": "LED Wash 41",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 11.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-042",
+    "manufacturer": "Generic",
+    "name": "LED Wash 42",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 12.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-043",
+    "manufacturer": "Generic",
+    "name": "LED Wash 43",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 13.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-044",
+    "manufacturer": "Generic",
+    "name": "LED Wash 44",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 14.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-045",
+    "manufacturer": "Generic",
+    "name": "LED Wash 45",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 15.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-046",
+    "manufacturer": "Generic",
+    "name": "LED Wash 46",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 16.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-047",
+    "manufacturer": "Generic",
+    "name": "LED Wash 47",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 17.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-048",
+    "manufacturer": "Generic",
+    "name": "LED Wash 48",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 18.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-049",
+    "manufacturer": "Generic",
+    "name": "LED Wash 49",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 19.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-050",
+    "manufacturer": "Generic",
+    "name": "LED Wash 50",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 20.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-051",
+    "manufacturer": "Generic",
+    "name": "LED Wash 51",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 21.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-052",
+    "manufacturer": "Generic",
+    "name": "LED Wash 52",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 22.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-053",
+    "manufacturer": "Generic",
+    "name": "LED Wash 53",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 23.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-054",
+    "manufacturer": "Generic",
+    "name": "LED Wash 54",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 24.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-055",
+    "manufacturer": "Generic",
+    "name": "LED Wash 55",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 25.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-056",
+    "manufacturer": "Generic",
+    "name": "LED Wash 56",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 26.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-057",
+    "manufacturer": "Generic",
+    "name": "LED Wash 57",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 27.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-058",
+    "manufacturer": "Generic",
+    "name": "LED Wash 58",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 28.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-059",
+    "manufacturer": "Generic",
+    "name": "LED Wash 59",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 29.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-060",
+    "manufacturer": "Generic",
+    "name": "LED Wash 60",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-061",
+    "manufacturer": "Generic",
+    "name": "LED Wash 61",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 11.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-062",
+    "manufacturer": "Generic",
+    "name": "LED Wash 62",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 12.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-063",
+    "manufacturer": "Generic",
+    "name": "LED Wash 63",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 13.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-064",
+    "manufacturer": "Generic",
+    "name": "LED Wash 64",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 14.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-065",
+    "manufacturer": "Generic",
+    "name": "LED Wash 65",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 15.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-066",
+    "manufacturer": "Generic",
+    "name": "LED Wash 66",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 16.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-067",
+    "manufacturer": "Generic",
+    "name": "LED Wash 67",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 17.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-068",
+    "manufacturer": "Generic",
+    "name": "LED Wash 68",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 18.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-069",
+    "manufacturer": "Generic",
+    "name": "LED Wash 69",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 19.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-070",
+    "manufacturer": "Generic",
+    "name": "LED Wash 70",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 20.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-071",
+    "manufacturer": "Generic",
+    "name": "LED Wash 71",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 21.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-072",
+    "manufacturer": "Generic",
+    "name": "LED Wash 72",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 22.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-073",
+    "manufacturer": "Generic",
+    "name": "LED Wash 73",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 23.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-074",
+    "manufacturer": "Generic",
+    "name": "LED Wash 74",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 24.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-075",
+    "manufacturer": "Generic",
+    "name": "LED Wash 75",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 25.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-076",
+    "manufacturer": "Generic",
+    "name": "LED Wash 76",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 26.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-077",
+    "manufacturer": "Generic",
+    "name": "LED Wash 77",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 27.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-078",
+    "manufacturer": "Generic",
+    "name": "LED Wash 78",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 28.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-079",
+    "manufacturer": "Generic",
+    "name": "LED Wash 79",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 29.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-080",
+    "manufacturer": "Generic",
+    "name": "LED Wash 80",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 10.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-081",
+    "manufacturer": "Generic",
+    "name": "LED Wash 81",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 11.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-082",
+    "manufacturer": "Generic",
+    "name": "LED Wash 82",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 12.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-083",
+    "manufacturer": "Generic",
+    "name": "LED Wash 83",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 13.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-084",
+    "manufacturer": "Generic",
+    "name": "LED Wash 84",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 14.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-085",
+    "manufacturer": "Generic",
+    "name": "LED Wash 85",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 15.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-086",
+    "manufacturer": "Generic",
+    "name": "LED Wash 86",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 16.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-087",
+    "manufacturer": "Generic",
+    "name": "LED Wash 87",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 17.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-088",
+    "manufacturer": "Generic",
+    "name": "LED Wash 88",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 18.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  },
+  {
+    "id": "GENERIC-WASH-089",
+    "manufacturer": "Generic",
+    "name": "LED Wash 89",
+    "type": "wash",
+    "dmx_channels": 12,
+    "modes": [
+      "12ch",
+      "14ch"
+    ],
+    "beam_angle": 19.0,
+    "zoom_range": "variable",
+    "capabilities": [
+      "RGB",
+      "dimmer",
+      "zoom"
+    ]
+  }
+]

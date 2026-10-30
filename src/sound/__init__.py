@@ -1,0 +1,1 @@
+"""Lightman Sound application."""
