@@ -1,646 +1,1250 @@
-"""Lightman Director — main application window."""
+"""
+Lightman Director — shell.
 
-from __future__ import annotations
+Layout:
+    Top bar: app · blackout status · clock · ⚙ Settings
+    Tabs: Director · Studio 3D · Timeline · Script · Rehearsals · Profile
+    Bottom dock: Session Log
+
+AI modes:
+    easy   — AI proposes; user clicks ✅ to apply
+    medium — AI applies; undo button appears for 10 s
+    hard   — AI applies immediately, no undo
+
+Blackout:
+    Esc / ⬛ Blackout → LOCK: chat + settings + spawn blocked
+    ▶ Resume → unlock
+"""
 
 import json
-import logging
 import os
+import re
 import sys
 from datetime import datetime
-from pathlib import Path
 
-from PySide6.QtCore import QThread, QTimer, Qt, Signal
-from PySide6.QtGui import QKeySequence
+from PySide6.QtCore import QThread, Signal, QTimer, Qt
+from PySide6.QtGui import QShortcut, QKeySequence
 from PySide6.QtWidgets import (
-    QApplication,
-    QCheckBox,
-    QComboBox,
-    QDialog,
-    QFormLayout,
-    QGroupBox,
-    QHBoxLayout,
-    QKeySequenceEdit,
-    QLabel,
-    QLineEdit,
-    QListWidget,
-    QListWidgetItem,
-    QMainWindow,
-    QMessageBox,
-    QPushButton,
-    QScrollArea,
-    QSplitter,
-    QStackedWidget,
-    QTabWidget,
-    QTextEdit,
-    QVBoxLayout,
-    QWidget,
+    QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
+    QFormLayout, QLabel, QPushButton, QDialog, QLineEdit, QTextEdit,
+    QMessageBox, QTabWidget, QGroupBox, QScrollArea, QComboBox,
+    QTableWidget, QHeaderView, QDockWidget, QButtonGroup,
 )
 
-from shared.agents_config import PROVIDER_PRESETS, build_graph
-from shared.auth import authenticate, register_user, ensure_default_user
-from shared.rag_init import train_knowledge_base
+_PROJECT_ROOT = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+)
+if _PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, _PROJECT_ROOT)
 
-from src.director.ui_3d import Lightman3DView
-from src.director.ui_asset_browser import AssetBrowserWidget
+from langchain_core.messages import HumanMessage  # noqa: E402
 
-log = logging.getLogger(__name__)
+from shared.auth import (  # noqa: E402
+    authenticate, register_user, ensure_default_user,
+)
+from shared.rag_init import train_knowledge_base  # noqa: E402
+from shared.agents_config import build_graph  # noqa: E402
+from src.director.studio_3d import Studio3DPage  # noqa: E402
 
-SETTINGS_PATH = Path("data/settings.json")
 
-SIDEBAR_ITEMS = ["Studio", "Timeline", "Script", "Rehearsals", "Profile"]
+# ===========================================================================
+# i18n
+# ===========================================================================
 
-DEFAULT_SETTINGS: dict = {
-    "ai_provider": "Custom",
-    "ai_api_key": "",
-    "ai_base_url": "",
-    "ai_model": "",
-    "camera_source": "IP",
-    "camera_ip": "",
-    "camera_port": "",
-    "camera_position": "",
-    "camera_notes": "",
-    "lighting_mode": "Manual",
-    "lighting_audience": "Front of House",
-    "lighting_eco": False,
-    "hotkey_start": "F5",
-    "hotkey_stop": "F6",
-    "hotkey_record": "Ctrl+Space",
-    "language": "English",
+_T = {
+    "app_title": {"en": "Lightman", "ru": "Lightman"},
+    "login": {"en": "Login", "ru": "Войти"},
+    "register": {"en": "Register", "ru": "Регистрация"},
+    "username": {"en": "Username", "ru": "Имя пользователя"},
+    "password": {"en": "Password", "ru": "Пароль"},
+    "login_missing": {"en": "Enter username and password.",
+                      "ru": "Введите логин и пароль."},
+    "login_invalid": {"en": "Invalid credentials.",
+                      "ru": "Неверный логин или пароль."},
+    "register_ok": {"en": "User created. You can log in now.",
+                    "ru": "Пользователь создан. Войдите."},
+    "register_exists": {"en": "Username already exists.",
+                        "ru": "Пользователь уже существует."},
+    "warning": {"en": "Warning", "ru": "Внимание"},
+    "info": {"en": "Information", "ru": "Информация"},
+    "settings": {"en": "Settings", "ru": "Настройки"},
+    "ai_assistant": {"en": "AI Assistant", "ru": "ИИ-ассистент"},
+    "session_log": {"en": "Session Log", "ru": "Журнал сеанса"},
+    "ask_ai": {"en": "Ask the AI… (Enter to send)",
+               "ru": "Спросите ИИ… (Enter — отправить)"},
+    "you": {"en": "You", "ru": "Вы"},
+    "ai": {"en": "AI", "ru": "ИИ"},
+    "error": {"en": "Error", "ru": "Ошибка"},
+    "clear": {"en": "Clear", "ru": "Очистить"},
+    "no_api_key": {"en": "Set API key in Settings first.",
+                   "ru": "Сначала задайте API-ключ в Настройках."},
+    "tab_director": {"en": "Director", "ru": "Режиссёр"},
+    "tab_studio": {"en": "Studio 3D", "ru": "Студия 3D"},
+    "tab_timeline": {"en": "Timeline", "ru": "Таймлайн"},
+    "tab_script": {"en": "Script", "ru": "Сценарий"},
+    "tab_rehearsals": {"en": "Rehearsals", "ru": "Репетиции"},
+    "tab_profile": {"en": "Profile", "ru": "Профиль"},
+    "timeline_time": {"en": "Time", "ru": "Время"},
+    "timeline_fixture": {"en": "Fixture", "ru": "Прибор"},
+    "timeline_action": {"en": "Action", "ru": "Действие"},
+    "timeline_intensity": {"en": "Intensity", "ru": "Интенсивность"},
+    "script_placeholder": {"en": "Paste or write the show script here…",
+                           "ru": "Вставьте или напишите сценарий шоу здесь…"},
+    "rehearsals_placeholder": {"en": "Write rehearsal notes and logs here…",
+                               "ru": "Пишите заметки и логи репетиций здесь…"},
+    "profile_title": {"en": "Profile", "ru": "Профиль"},
+    "profile_user": {"en": "User", "ru": "Пользователь"},
+    "profile_role": {"en": "Role", "ru": "Роль"},
+    "profile_role_admin": {"en": "Administrator", "ru": "Администратор"},
+    "tab_ai": {"en": "AI Provider", "ru": "ИИ-провайдер"},
+    "tab_ai_mode": {"en": "AI Mode", "ru": "Режим ИИ"},
+    "tab_connections": {"en": "Connections", "ru": "Подключения"},
+    "tab_language": {"en": "Language", "ru": "Язык"},
+    "provider": {"en": "Provider", "ru": "Провайдер"},
+    "api_key": {"en": "API Key", "ru": "API-ключ"},
+    "base_url": {"en": "Base URL", "ru": "Базовый URL"},
+    "model_name": {"en": "Model Name", "ru": "Модель"},
+    "light_app_code": {"en": "Light App Code", "ru": "Код Light-приложения"},
+    "sound_app_code": {"en": "Sound App Code", "ru": "Код Sound-приложения"},
+    "language": {"en": "Language", "ru": "Язык"},
+    "lang_en": {"en": "English", "ru": "Английский"},
+    "lang_ru": {"en": "Russian", "ru": "Русский"},
+    "save": {"en": "Save", "ru": "Сохранить"},
+    "cancel": {"en": "Cancel", "ru": "Отмена"},
+    "training": {"en": "AI Training", "ru": "Обучение ИИ"},
+    "training_started": {"en": "Training started...",
+                         "ru": "Обучение запущено..."},
+    "training_done": {"en": "Training complete: %1 script chunks, %2 fixture chunks.",
+                      "ru": "Обучение завершено: %1 чанков скрипта, %2 чанков фикстур."},
+    "training_empty": {"en": "Training finished — no data found.",
+                       "ru": "Обучение завершено — данные не найдены."},
+    "blackout_active": {"en": "BLACKOUT — AI locked",
+                        "ru": "БЛЭКАУТ — ИИ заблокирован"},
+    "blackout_incomplete": {"en": "Blackout incomplete: some fixtures stuck. Lock NOT engaged.",
+                            "ru": "Блэкаут неполный: приборы зависли. Блокировка НЕ включена."},
+}
+
+_LANG = "en"
+
+
+def tr(key):
+    entry = _T.get(key)
+    if not entry:
+        return key
+    return entry.get(_LANG) or entry.get("en") or key
+
+
+def set_language(lang):
+    global _LANG
+    if lang in ("en", "ru"):
+        _LANG = lang
+
+
+# ===========================================================================
+# Scene-control markers + per-mode AI hints
+# ===========================================================================
+
+_SPAWN_RE = re.compile(r"\[SPAWN:\s*([^\]]+?)\]", re.IGNORECASE)
+_REMOVE_RE = re.compile(r"\[REMOVE:\s*([^\]]+?)\]", re.IGNORECASE)
+
+_SCENE_CONTROL_HINT = (
+    "\n\n[Scene control]\n"
+    "You can modify the 3D scene. To add a fixture, emit exactly "
+    "[SPAWN: <fixture_name>]. To remove one, emit [REMOVE: <fixture_name>]. "
+    "Use only fixture names that appear in the library.\n"
+    "The markers are hidden from the user, but the actions may be executed "
+    "depending on the current AI mode.\n\n"
+    "[Laser safety — MANDATORY]\n"
+    "The 'Dead zones' list above is a hard no-fly list. NEVER aim any "
+    "laser or bright beam toward a dead zone's bounding box.\n\n"
+    "[Blackout]\n"
+    "If a blackout is active, you are FROZEN. Do not propose actions, "
+    "do not suggest resuming. Only the operator can resume.\n"
+)
+
+_MODE_HINT = {
+    "easy": (
+        "\n[Mode: EASY]\n"
+        "You are in suggestion mode. Emit [SPAWN:] / [REMOVE:] freely — "
+        "the operator will confirm each action. Prefer explaining intent "
+        "clearly before the markers.\n"
+    ),
+    "medium": (
+        "\n[Mode: MEDIUM]\n"
+        "Your actions are auto-applied with a 10-second undo window. "
+        "Emit [SPAWN:] / [REMOVE:] for routine work, but avoid destructive "
+        "moves unless clearly requested.\n"
+    ),
+    "hard": (
+        "\n[Mode: HARD]\n"
+        "Your actions apply IMMEDIATELY with no undo. Only emit "
+        "[SPAWN:] / [REMOVE:] when you are certain. Double-check names. "
+        "Never remove safety-critical items. Only Blackout can stop you.\n"
+    ),
 }
 
 
-def load_settings() -> dict:
-    if SETTINGS_PATH.exists():
-        try:
-            raw = json.loads(SETTINGS_PATH.read_text(encoding="utf-8"))
-            if isinstance(raw, dict):
-                merged = dict(DEFAULT_SETTINGS)
-                merged.update(raw)
-                return merged
-        except (OSError, ValueError):
-            pass
-    return dict(DEFAULT_SETTINGS)
+def _strip_markers(text):
+    text = _SPAWN_RE.sub("", text)
+    text = _REMOVE_RE.sub("", text)
+    return re.sub(r"\n{3,}", "\n\n", text).strip()
 
 
-def save_settings(settings: dict) -> None:
-    SETTINGS_PATH.parent.mkdir(parents=True, exist_ok=True)
-    SETTINGS_PATH.write_text(
-        json.dumps(settings, indent=2, ensure_ascii=False), encoding="utf-8"
+# ===========================================================================
+# AutoTrainThread
+# ===========================================================================
+
+class AutoTrainThread(QThread):
+    finished_train = Signal(str)
+
+    SCRIPT_PATH = os.path.join(_PROJECT_ROOT, "data", "script.txt")
+    FIXTURES_PATH = os.path.join(
+        _PROJECT_ROOT, "fixtures_db", "fixtures_catalog.json"
     )
 
+    def run(self):
+        ts = tf = 0
+        if os.path.isfile(self.SCRIPT_PATH):
+            with open(self.SCRIPT_PATH, "r", encoding="utf-8") as fh:
+                ts = train_knowledge_base(fh.read(), "script.txt")
+        if os.path.isfile(self.FIXTURES_PATH):
+            with open(self.FIXTURES_PATH, "r", encoding="utf-8") as fh:
+                tf = train_knowledge_base(fh.read(), "fixtures.json")
+        if ts == 0 and tf == 0:
+            self.finished_train.emit(tr("training_empty"))
+        else:
+            self.finished_train.emit(
+                tr("training_done").replace("%1", str(ts)).replace("%2", str(tf))
+            )
 
-# ----------------------------------------------------------------------
-# Chat worker — runs build_graph() in a background QThread (BYOK)
-# ----------------------------------------------------------------------
 
+# ===========================================================================
+# ChatWorker — knows the AI mode and feeds it into the prompt + graph state
+# ===========================================================================
+
+class ChatWorker(QThread):
+    reply_ready = Signal(str)
+    error_occurred = Signal(str)
+    spawn_requested = Signal(str)
+    remove_requested = Signal(str)
+
+    def __init__(self, question, settings, fixtures,
+                 dead_zones=None, ai_mode="easy", parent=None):
+        super().__init__(parent)
+        self.question = question
+        self.settings = dict(settings or {})
+        self.settings["ai_mode"] = ai_mode
+        self.fixtures = list(fixtures or [])
+        self.dead_zones = list(dead_zones or [])
+        self.ai_mode = ai_mode if ai_mode in _MODE_HINT else "easy"
+
+    def _format_scene(self):
+        if not self.fixtures:
+            return "On-stage fixtures: (none)"
+        lines = ["On-stage fixtures:"]
+        for fx in self.fixtures:
+            name = fx.get("name") or fx.get("type") or "fixture"
+            pos = fx.get("position") or (0, 0, 0)
+            att = fx.get("attached_to")
+            suffix = f" [on {att}]" if att else ""
+            inten = fx.get("intensity", 100)
+            try:
+                lines.append(
+                    f"- {name} ({inten}%) at "
+                    f"({float(pos[0]):.2f}, {float(pos[1]):.2f}, "
+                    f"{float(pos[2]):.2f}){suffix}"
+                )
+            except (TypeError, ValueError, IndexError):
+                lines.append(f"- {name} ({inten}%){suffix}")
+        return "\n".join(lines)
+
+    def _format_zones(self):
+        if not self.dead_zones:
+            return "Dead zones: (none)"
+        lines = ["Dead zones — NEVER aim lasers or bright beams here:"]
+        for z in self.dead_zones:
+            name = z.get("name", "zone")
+            pos = z.get("position", [0, 0, 0])
+            size = z.get("size", [1, 1, 1])
+            reason = z.get("reason", "")
+            try:
+                lines.append(
+                    f"- {name} at ({float(pos[0]):.1f}, {float(pos[1]):.1f}, "
+                    f"{float(pos[2]):.1f}), size "
+                    f"{float(size[0]):.1f}×{float(size[1]):.1f}×"
+                    f"{float(size[2]):.1f}. Reason: {reason}"
+                )
+            except (TypeError, ValueError, IndexError):
+                lines.append(f"- {name}. Reason: {reason}")
+        return "\n".join(lines)
+
+    def _format_library(self):
+        try:
+            from src.director.studio_3d.panels.fixture_library import (
+                _load_catalogue, _HARDCODED,
+            )
+            names = []
+            for fx in _load_catalogue()[:60]:
+                if fx.get("name"):
+                    names.append(str(fx["name"]))
+            for items in _HARDCODED.values():
+                for fx in items:
+                    names.append(fx["name"])
+            if not names:
+                return ""
+            return "Fixture names you can [SPAWN: ...]: " + ", ".join(names)
+        except Exception:
+            return ""
+
+    def run(self):
+        import traceback
+        try:
+            graph = build_graph()
+            user_text = (
+                f"{self._format_scene()}\n\n"
+                f"{self._format_zones()}\n\n"
+                f"{self._format_library()}\n"
+                f"{_SCENE_CONTROL_HINT}\n"
+                f"{_MODE_HINT[self.ai_mode]}\n"
+                f"User question: {self.question}"
+            )
+            state = {
+                "messages": [HumanMessage(content=user_text)],
+                "settings": self.settings,
+                "next": "director",
+            }
+            result = graph.invoke(state)
+            messages = result.get("messages", [])
+            raw = str(messages[-1].content) if messages else ""
+            for name in _SPAWN_RE.findall(raw):
+                self.spawn_requested.emit(name.strip())
+            for name in _REMOVE_RE.findall(raw):
+                self.remove_requested.emit(name.strip())
+            self.reply_ready.emit(_strip_markers(raw))
+        except Exception:
+            traceback.print_exc()
+            self.error_occurred.emit(traceback.format_exc())
+
+
+# ===========================================================================
+# LoginDialog
+# ===========================================================================
 
 class LoginDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Lightman — Login")
-        self.setMinimumWidth(360)
-        self.setModal(True)
-        layout = QVBoxLayout(self)
-        form = QFormLayout()
+        self.setWindowTitle(tr("login"))
+        self.setMinimumWidth(400)
+        title = QLabel(tr("app_title"))
+        title.setObjectName("Title")
         self.username_input = QLineEdit()
+        self.username_input.setPlaceholderText(tr("username"))
         self.password_input = QLineEdit()
-        self.password_input.setEchoMode(QLineEdit.EchoMode.Password)
-        form.addRow("Username:", self.username_input)
-        form.addRow("Password:", self.password_input)
-        layout.addLayout(form)
-        self.status_label = QLabel("")
-        layout.addWidget(self.status_label)
-        buttons = QHBoxLayout()
-        login_btn = QPushButton("Login")
-        register_btn = QPushButton("Register")
-        login_btn.clicked.connect(self._on_login)
-        register_btn.clicked.connect(self._on_register)
-        buttons.addWidget(login_btn)
-        buttons.addWidget(register_btn)
-        layout.addLayout(buttons)
+        self.password_input.setPlaceholderText(tr("password"))
+        self.password_input.setEchoMode(QLineEdit.Password)
+        self.login_btn = QPushButton(tr("login"))
+        self.login_btn.setObjectName("Primary")
+        self.register_btn = QPushButton(tr("register"))
+
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(24, 24, 24, 24)
+        layout.setSpacing(12)
+        layout.addWidget(title)
+        layout.addSpacing(8)
+        layout.addWidget(self.username_input)
+        layout.addWidget(self.password_input)
+        layout.addSpacing(8)
+        btns = QHBoxLayout()
+        btns.addWidget(self.register_btn)
+        btns.addStretch(1)
+        btns.addWidget(self.login_btn)
+        layout.addLayout(btns)
+
+        self.login_btn.clicked.connect(self._on_login)
+        self.register_btn.clicked.connect(self._on_register)
+        self.password_input.returnPressed.connect(self._on_login)
 
     def _on_login(self):
         u = self.username_input.text().strip()
         p = self.password_input.text()
+        if not u or not p:
+            QMessageBox.warning(self, tr("warning"), tr("login_missing"))
+            return
         if authenticate(u, p):
             self.accept()
         else:
-            self.status_label.setText("Invalid credentials")
-            self.status_label.setStyleSheet("color: #ff5555;")
+            QMessageBox.warning(self, tr("warning"), tr("login_invalid"))
 
     def _on_register(self):
         u = self.username_input.text().strip()
         p = self.password_input.text()
+        if not u or not p:
+            QMessageBox.warning(self, tr("warning"), tr("login_missing"))
+            return
         if register_user(u, p):
-            self.status_label.setText("Registered! Please log in.")
-            self.status_label.setStyleSheet("color: #55ff55;")
+            QMessageBox.information(self, tr("info"), tr("register_ok"))
         else:
-            self.status_label.setText("User already exists")
-            self.status_label.setStyleSheet("color: #ff5555;")
+            QMessageBox.warning(self, tr("warning"), tr("register_exists"))
 
 
-class ChatWorker(QThread):
-    response = Signal(str)
-    error = Signal(str)
-
-    def __init__(self, settings: dict, user_input: str, history: list):
-        super().__init__()
-        self.settings = settings
-        self.user_input = user_input
-        self.history = history
-
-    def run(self) -> None:
-        graph = build_graph()
-        state = {
-            "user_input": self.user_input,
-            "settings": self.settings,
-            "history": list(self.history),
-            "spatial": {},
-        }
-        result = graph.invoke(state)
-        self.response.emit(result.get("response", ""))
-
-
-class AutoTrainThread(QThread):
-    """
-    Trains the local ChromaDB knowledge base on the user's script and
-    the fixtures catalogue.
-
-    Triggered when the user saves a non-empty API key in the Settings
-    dialog. Runs in a background thread so the UI never blocks, and emits
-    `finished_train(msg)` on success or failure so the caller can pop a
-    QMessageBox.
-    """
-
-    finished_train = Signal(str)
-
-    SCRIPT_PATH = os.path.join("data", "script.txt")
-    FIXTURES_PATH = os.path.join("fixtures_db", "fixtures_catalog.json")
-
-    def run(self) -> None:
-        try:
-            trained_script = 0
-            trained_fixtures = 0
-
-            if os.path.isfile(self.SCRIPT_PATH):
-                with open(self.SCRIPT_PATH, "r", encoding="utf-8") as handle:
-                    script_text = handle.read()
-                trained_script = train_knowledge_base(script_text, "script.txt")
-                log.info(
-                    "AutoTrainThread: %d script chunks", trained_script
-                )
-            else:
-                log.info(
-                    "AutoTrainThread: %s not found, skipping",
-                    self.SCRIPT_PATH,
-                )
-
-            if os.path.isfile(self.FIXTURES_PATH):
-                with open(self.FIXTURES_PATH, "r", encoding="utf-8") as handle:
-                    fixtures_text = handle.read()
-                trained_fixtures = train_knowledge_base(
-                    fixtures_text, "fixtures.json"
-                )
-                log.info(
-                    "AutoTrainThread: %d fixture chunks", trained_fixtures
-                )
-            else:
-                log.info(
-                    "AutoTrainThread: %s not found, skipping",
-                    self.FIXTURES_PATH,
-                )
-
-            if trained_script == 0 and trained_fixtures == 0:
-                self.finished_train.emit(
-                    "AI training finished — no script or fixture data found."
-                )
-                return
-
-            self.finished_train.emit(
-                "AI successfully trained on script and fixtures."
-            )
-
-        except Exception as exc:
-            log.exception("AutoTrainThread failed")
-            self.finished_train.emit(f"AI training failed: {exc}")
-
-
-# ----------------------------------------------------------------------
-# Settings modal
-# ----------------------------------------------------------------------
-
+# ===========================================================================
+# SettingsDialog — AI Provider / AI Mode / Connections / Language
+# ===========================================================================
 
 class SettingsDialog(QDialog):
-    """Modal settings dialog with tabbed, scrollable pages."""
-
-    def __init__(self, settings: dict, parent: QWidget | None = None):
+    def __init__(self, settings, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("⚙ Settings")
-        self.setModal(True)
-        self.resize(760, 620)
-        self._settings = dict(settings)
-        self._widgets: dict = {}
-        self._build_ui()
-        self._load_into_widgets()
-
-    def _build_ui(self) -> None:
-        root = QVBoxLayout(self)
-
+        self.settings = dict(settings or {})
+        self.setWindowTitle(tr("settings"))
+        self.setMinimumSize(720, 560)
+        self.train_thread = None
         self.tabs = QTabWidget()
-        root.addWidget(self.tabs, 1)
 
-        self._tab_ai_provider()
-        self._tab_camera()
-        self._tab_lighting()
-        self._tab_hotkeys()
-        self._tab_scene()
-        self._tab_language()
+        # ============ TAB: AI PROVIDER ============
+        self.provider_combo = QComboBox()
+        self.provider_combo.addItems([
+            "groq", "openrouter", "gemini", "mistral", "cerebras",
+            "ollama_local", "lmstudio_local", "custom",
+        ])
+        self.provider_combo.setCurrentText(self.settings.get("provider", "groq"))
+        self.api_key_input = QLineEdit(self.settings.get("api_key", ""))
+        self.api_key_input.setEchoMode(QLineEdit.Password)
+        self.base_url_input = QLineEdit(self.settings.get("base_url", ""))
+        self.model_input = QLineEdit(self.settings.get("model", ""))
+        ai_form = QFormLayout()
+        ai_form.setSpacing(10)
+        ai_form.addRow(tr("provider") + ":", self.provider_combo)
+        ai_form.addRow(tr("api_key") + ":", self.api_key_input)
+        ai_form.addRow(tr("base_url") + ":", self.base_url_input)
+        ai_form.addRow(tr("model_name") + ":", self.model_input)
+        ai_group = QGroupBox(tr("tab_ai"))
+        ai_group.setLayout(ai_form)
+        self.tabs.addTab(self._wrap(ai_group), tr("tab_ai"))
 
-        btns = QHBoxLayout()
-        btns.addStretch(1)
-        save_btn = QPushButton("Save")
-        cancel_btn = QPushButton("Cancel")
-        save_btn.setDefault(True)
-        save_btn.clicked.connect(self.accept)
+        # ============ TAB: AI MODE ============
+        self.ai_mode_group = QGroupBox(tr("tab_ai_mode"))
+        mode_layout = QVBoxLayout(self.ai_mode_group)
+        mode_layout.setSpacing(12)
+
+        intro = QLabel(
+            "Choose how autonomous the AI should be. "
+            "The mode is injected into the AI prompt and controls how "
+            "actions are applied. You can switch at any time."
+        )
+        intro.setWordWrap(True)
+        intro.setStyleSheet("color: #8a8a8a; padding-bottom: 8px;")
+        mode_layout.addWidget(intro)
+
+        self._mode_buttons = {}
+        self._mode_button_group = QButtonGroup(self)
+        self._mode_button_group.setExclusive(True)
+
+        modes = [
+            ("easy",   "🟢  EASY",
+             "AI suggests — you decide. Buttons appear under each AI reply."),
+            ("medium", "🟡  MEDIUM",
+             "AI does routine work (spawn / remove). Undo button appears for 10 s."),
+            ("hard",   "🔴  HARD",
+             "AI applies immediately. No undo. Only Blackout can stop it."),
+        ]
+        current_mode = self.settings.get("ai_mode", "easy")
+        for mode_key, title, description in modes:
+            btn = QPushButton()
+            btn.setCheckable(True)
+            btn.setMinimumHeight(64)
+            btn.setStyleSheet(
+                "QPushButton {"
+                "  text-align: left;"
+                "  padding: 12px 16px;"
+                "  font-size: 13px;"
+                "  border: 1px solid #303030;"
+                "  border-radius: 6px;"
+                "}"
+                "QPushButton:checked {"
+                "  border: 2px solid #ff8a00;"
+                "  background-color: #2a2a2a;"
+                "}"
+                "QPushButton:hover {"
+                "  background-color: #2a2a2a;"
+                "}"
+            )
+            btn.setText(f"{title}\n{description}")
+            btn.setChecked(mode_key == current_mode)
+            self._mode_buttons[mode_key] = btn
+            self._mode_button_group.addButton(btn)
+            mode_layout.addWidget(btn)
+
+        mode_layout.addStretch(1)
+        self.tabs.addTab(self._wrap(self.ai_mode_group), tr("tab_ai_mode"))
+
+        # ============ TAB: CONNECTIONS ============
+        self.light_code_input = QLineEdit(self.settings.get("light_code", ""))
+        self.light_code_input.setPlaceholderText("SL-LIGHT-XXXX")
+        self.sound_code_input = QLineEdit(self.settings.get("sound_code", ""))
+        self.sound_code_input.setPlaceholderText("SL-SOUND-XXXX")
+        conn_form = QFormLayout()
+        conn_form.setSpacing(10)
+        conn_form.addRow(tr("light_app_code") + ":", self.light_code_input)
+        conn_form.addRow(tr("sound_app_code") + ":", self.sound_code_input)
+        conn_group = QGroupBox(tr("tab_connections"))
+        conn_group.setLayout(conn_form)
+        self.tabs.addTab(self._wrap(conn_group), tr("tab_connections"))
+
+        # ============ TAB: LANGUAGE ============
+        self.language_combo = QComboBox()
+        self.language_combo.addItem(tr("lang_en"), "en")
+        self.language_combo.addItem(tr("lang_ru"), "ru")
+        idx = self.language_combo.findData(self.settings.get("language", _LANG))
+        if idx >= 0:
+            self.language_combo.setCurrentIndex(idx)
+        lang_form = QFormLayout()
+        lang_form.setSpacing(10)
+        lang_form.addRow(tr("language") + ":", self.language_combo)
+        lang_group = QGroupBox(tr("tab_language"))
+        lang_group.setLayout(lang_form)
+        self.tabs.addTab(self._wrap(lang_group), tr("tab_language"))
+
+        # ============ BUTTONS ============
+        save_btn = QPushButton(tr("save"))
+        save_btn.setObjectName("Primary")
+        save_btn.clicked.connect(self._on_save)
+        cancel_btn = QPushButton(tr("cancel"))
         cancel_btn.clicked.connect(self.reject)
-        btns.addWidget(save_btn)
-        btns.addWidget(cancel_btn)
-        root.addLayout(btns)
+        btn_row = QHBoxLayout()
+        btn_row.addStretch(1)
+        btn_row.addWidget(cancel_btn)
+        btn_row.addWidget(save_btn)
 
-    def _scroll_tab(self, title: str) -> QVBoxLayout:
-        tab = QWidget()
-        v = QVBoxLayout(tab)
-        v.setContentsMargins(8, 8, 8, 8)
-        scroll = QScrollArea()
-        scroll.setWidgetResizable(True)
-        content = QWidget()
-        cv = QVBoxLayout(content)
-        cv.setContentsMargins(4, 4, 4, 4)
-        scroll.setWidget(content)
-        v.addWidget(scroll)
-        self.tabs.addTab(tab, title)
-        return cv
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(16, 16, 16, 16)
+        layout.addWidget(self.tabs)
+        layout.addLayout(btn_row)
 
-    def _group(self, layout, title: str) -> QGroupBox:
-        gb = QGroupBox(title)
-        gb.setLayout(layout)
-        layout.addWidget(gb)
-        layout.addStretch(1)
-        return gb
+    def _wrap(self, w):
+        s = QScrollArea()
+        s.setWidgetResizable(True)
+        s.setWidget(w)
+        return s
 
-    def _field(self, layout, label: str, widget, key: str) -> None:
-        layout.addRow(label, widget)
-        self._widgets[key] = widget
+    def _selected_mode(self):
+        for key, btn in self._mode_buttons.items():
+            if btn.isChecked():
+                return key
+        return "easy"
 
-    def _tab_ai_provider(self) -> None:
-        cv = self._scroll_tab("AI Provider")
-        form = QFormLayout()
-        self._group(form, "AI Provider")
+    def _on_save(self):
+        self.settings["provider"] = self.provider_combo.currentText()
+        self.settings["api_key"] = self.api_key_input.text().strip()
+        self.settings["base_url"] = self.base_url_input.text().strip()
+        self.settings["model"] = self.model_input.text().strip()
+        self.settings["ai_mode"] = self._selected_mode()
+        self.settings["light_code"] = self.light_code_input.text().strip()
+        self.settings["sound_code"] = self.sound_code_input.text().strip()
+        self.settings["language"] = self.language_combo.currentData()
 
-        provider = QComboBox()
-        provider.addItems(list(PROVIDER_PRESETS.keys()) + ["Custom"])
-        self._field(form, "Provider", provider, "ai_provider")
+        os.makedirs(os.path.join(_PROJECT_ROOT, "data"), exist_ok=True)
+        with open(os.path.join(_PROJECT_ROOT, "data", "settings.json"),
+                  "w", encoding="utf-8") as fh:
+            json.dump(self.settings, fh, indent=2)
 
-        api_key = QLineEdit()
-        api_key.setEchoMode(QLineEdit.EchoMode.Password)
-        self.api_key_input = api_key
-        self._field(form, "API Key", api_key, "ai_api_key")
+        set_language(self.settings["language"])
 
-        base_url = QLineEdit()
-        self._field(form, "Base URL", base_url, "ai_base_url")
-
-        model = QLineEdit()
-        self._field(form, "Model Name", model, "ai_model")
-
-    def _tab_camera(self) -> None:
-        cv = self._scroll_tab("Camera")
-        form = QFormLayout()
-        self._group(form, "Camera Source")
-
-        source = QComboBox()
-        source.addItems(["IP", "HDMI"])
-        self._field(form, "Source", source, "camera_source")
-
-        ip = QLineEdit()
-        self._field(form, "IP / URL", ip, "camera_ip")
-
-        port = QLineEdit()
-        self._field(form, "Port", port, "camera_port")
-
-        position = QLineEdit()
-        self._field(form, "Position", position, "camera_position")
-
-        notes = QLineEdit()
-        self._field(form, "Notes", notes, "camera_notes")
-
-    def _tab_lighting(self) -> None:
-        cv = self._scroll_tab("Lighting")
-        form = QFormLayout()
-        self._group(form, "Lighting")
-
-        mode = QComboBox()
-        mode.addItems(["Manual", "Auto", "Music", "Timecode"])
-        self._field(form, "Mode", mode, "lighting_mode")
-
-        audience = QComboBox()
-        audience.addItems(["Front of House", "Stage", "Audience", "All"])
-        self._field(form, "Audience", audience, "lighting_audience")
-
-        eco_cb = QCheckBox("Eco Mode")
-        self._field(form, "Eco Mode", eco_cb, "lighting_eco")
-
-    def _tab_hotkeys(self) -> None:
-        cv = self._scroll_tab("Hotkeys")
-        form = QFormLayout()
-        self._group(form, "Hotkeys")
-
-        for key, label in [
-            ("hotkey_start", "Start"),
-            ("hotkey_stop", "Stop"),
-            ("hotkey_record", "Record"),
-        ]:
-            edit = QKeySequenceEdit()
-            edit.setKeySequence(QKeySequence(self._settings.get(key, "")))
-            self._field(form, label, edit, key)
-
-    def _tab_scene(self) -> None:
-        cv = self._scroll_tab("Scene")
-        form = QFormLayout()
-        self._group(form, "Scene")
-
-        path_edit = QLineEdit(str(SETTINGS_PATH))
-        self._field(form, "Settings path", path_edit, "settings_path")
-
-    def _tab_language(self) -> None:
-        cv = self._scroll_tab("Language")
-        form = QFormLayout()
-        self._group(form, "Language")
-
-        lang = QComboBox()
-        lang.addItems(["Russian", "English"])
-        self._field(form, "Language", lang, "language")
-
-    def _load_into_widgets(self) -> None:
-        for key, widget in self._widgets.items():
-            value = self._settings.get(key, "")
-            if widget is None:
-                continue
-            if isinstance(widget, QComboBox):
-                idx = widget.findText(str(value), Qt.MatchFixedString)
-                if idx < 0:
-                    idx = 0
-                widget.setCurrentIndex(idx)
-            elif isinstance(widget, QCheckBox):
-                widget.setChecked(bool(value))
-            elif isinstance(widget, QKeySequenceEdit):
-                widget.setKeySequence(QKeySequence(str(value)))
-            else:
-                widget.setText(str(value))
-
-    def _on_save(self) -> None:
-        for key, widget in self._widgets.items():
-            if widget is None:
-                continue
-            if isinstance(widget, QComboBox):
-                self._settings[key] = widget.currentText()
-            elif isinstance(widget, QCheckBox):
-                self._settings[key] = widget.isChecked()
-            elif isinstance(widget, QKeySequenceEdit):
-                seq = widget.keySequence()
-                self._settings[key] = seq.toString() if not seq.isEmpty() else ""
-            else:
-                self._settings[key] = widget.text()
-        save_settings(self._settings)
-
-    def accept(self) -> None:
-        api_key = self.api_key_input.text().strip()
-
-        # Persist settings from every tab.
-        self._on_save()
-
-        # Make the API key visible to the rest of the app before training starts.
-        self._settings["ai_api_key"] = api_key
-        self.settings = dict(self._settings)
-
-        # Trigger local RAG auto-training when a non-empty API key is provided.
-        if api_key:
-            self.train_thread = AutoTrainThread()
+        if self.settings["api_key"]:
+            self.train_thread = AutoTrainThread(self)
             self.train_thread.finished_train.connect(
-                lambda msg: QMessageBox.information(self, "AI Training", msg)
+                lambda msg: QMessageBox.information(None, tr("training"), msg)
             )
             self.train_thread.start()
-
-        super().accept()
-
-    def settings(self) -> dict:
-        return self._settings
+            QMessageBox.information(self, tr("training"), tr("training_started"))
+        self.accept()
 
 
+# ===========================================================================
+# DirectorTab — chat + AI-mode-aware actions
+# ===========================================================================
 
-# ----------------------------------------------------------------------
-# Main window
-# ----------------------------------------------------------------------
+class DirectorTab(QWidget):
+    spawn_requested = Signal(str)
+    remove_requested = Signal(str)
+    log_line = Signal(str)
 
+    def __init__(self, settings_provider, fixtures_provider,
+                 dead_zones_provider=None, blackout_provider=None,
+                 ai_mode_provider=None, parent=None):
+        super().__init__(parent)
+        self.settings_provider = settings_provider
+        self.fixtures_provider = fixtures_provider
+        self.dead_zones_provider = dead_zones_provider or (lambda: [])
+        self.blackout_provider = blackout_provider or (lambda: False)
+        self.ai_mode_provider = ai_mode_provider or (lambda: "easy")
+        self.worker = None
+        self.pending_actions = []
 
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("Lightman")
-        self.resize(1400, 900)
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(24, 24, 24, 24)
+        layout.setSpacing(12)
 
-        self._settings = load_settings()
-        self._chat_history: list = []
-        self._worker: ChatWorker | None = None
+        header = QHBoxLayout()
+        title = QLabel(tr("ai_assistant"))
+        title.setObjectName("Section")
+        header.addWidget(title)
+        header.addStretch(1)
 
-        self._build_ui()
-        self._start_clock()
+        self.mode_badge = QLabel("")
+        self.mode_badge.setStyleSheet(
+            "color: #ff8a00; padding: 2px 10px; "
+            "border: 1px solid #ff8a00; border-radius: 10px; "
+            "font-size: 11px; font-weight: bold;"
+        )
+        header.addWidget(self.mode_badge)
 
-        # Data binding: asset browser -> 3D view
-        self.asset_browser.fixture_selected.connect(
-            self.view_3d.spawn_fixture_on_stage
+        clear_btn = QPushButton(tr("clear"))
+        clear_btn.setMaximumWidth(80)
+        clear_btn.clicked.connect(self._on_clear)
+        header.addWidget(clear_btn)
+        layout.addLayout(header)
+
+        self.history = QTextEdit()
+        self.history.setReadOnly(True)
+        layout.addWidget(self.history, 1)
+
+        self.actions_widget = QWidget()
+        self.actions_layout = QHBoxLayout(self.actions_widget)
+        self.actions_layout.setContentsMargins(0, 0, 0, 0)
+        self.actions_layout.setSpacing(8)
+        self.actions_layout.addStretch(1)
+        self.actions_widget.setVisible(False)
+        layout.addWidget(self.actions_widget)
+
+        self.input = QLineEdit()
+        self.input.setPlaceholderText(tr("ask_ai"))
+        self.input.returnPressed.connect(self._on_send)
+        layout.addWidget(self.input)
+
+        self.refresh_mode_badge()
+
+    def refresh_mode_badge(self):
+        mode = self._current_mode().upper()
+        colors = {"EASY": "#22c55e", "MEDIUM": "#f0a500", "HARD": "#ef4444"}
+        color = colors.get(mode, "#8a8a8a")
+        self.mode_badge.setText(f"● {mode}")
+        self.mode_badge.setStyleSheet(
+            f"color: {color}; padding: 2px 10px; "
+            f"border: 1px solid {color}; border-radius: 10px; "
+            f"font-size: 11px; font-weight: bold;"
         )
 
-    def _build_ui(self) -> None:
+    def set_input_enabled(self, enabled):
+        self.input.setEnabled(enabled)
+        if not enabled:
+            self.input.setPlaceholderText(
+                "🔒 Blackout active — chat locked. Press Resume to unlock."
+            )
+        else:
+            self.input.setPlaceholderText(tr("ask_ai"))
+
+    def _current_mode(self):
+        try:
+            return self.ai_mode_provider() or "easy"
+        except Exception:
+            return "easy"
+
+    def _on_clear(self):
+        self.history.clear()
+        self._clear_actions()
+
+    def _clear_actions(self):
+        while self.actions_layout.count() > 1:
+            item = self.actions_layout.takeAt(0)
+            w = item.widget()
+            if w:
+                w.deleteLater()
+        self.actions_widget.setVisible(False)
+        self.pending_actions = []
+
+    def _on_send(self):
+        if self.blackout_provider():
+            self.log_line.emit(
+                "<span style='color:#ef4444'>Chat blocked — blackout active</span>"
+            )
+            return
+        question = self.input.text().strip()
+        if not question:
+            return
+        if self.worker is not None and self.worker.isRunning():
+            return
+        self.input.clear()
+        self._clear_actions()
+        self.history.append(
+            f"<p style='color:#ff8a00'><b>{tr('you')}:</b></p><p>{question}</p>"
+        )
+        self.log_line.emit(f"<span style='color:#ff8a00'>You:</span> {question}")
+
+        settings = dict(self.settings_provider() or {})
+        if not settings.get("api_key"):
+            self.history.append(
+                f"<p style='color:#ef4444'>{tr('no_api_key')}</p>")
+            self.log_line.emit("<span style='color:#ef4444'>No API key</span>")
+            return
+
+        mode = self._current_mode()
+        settings["ai_mode"] = mode
+
+        fixtures = list(self.fixtures_provider() or [])
+        zones = list(self.dead_zones_provider() or [])
+        self.worker = ChatWorker(
+            question, settings, fixtures, zones,
+            ai_mode=mode, parent=self,
+        )
+        self.worker.reply_ready.connect(self._on_reply)
+        self.worker.error_occurred.connect(self._on_error)
+        self.worker.spawn_requested.connect(self._on_spawn)
+        self.worker.remove_requested.connect(self._on_remove)
+        self.worker.finished.connect(self._on_finished)
+        self.worker.start()
+        self.log_line.emit(
+            f"AI thinking… <span style='color:#8a8a8a'>(mode: {mode})</span>"
+        )
+
+    def _on_reply(self, text):
+        self.history.append(
+            f"<p style='color:#ff8a00'><b>{tr('ai')}:</b></p><p>{text}</p>")
+        self.log_line.emit("<span style='color:#22c55e'>AI replied</span>")
+
+    def _on_error(self, msg):
+        self.history.append(
+            f"<p style='color:#ef4444'><b>{tr('error')}:</b></p><p>{msg[:300]}</p>")
+        self.log_line.emit("<span style='color:#ef4444'>AI error</span>")
+
+    def _on_spawn(self, name):
+        if self.blackout_provider():
+            self.log_line.emit(
+                f"<span style='color:#ef4444'>AI spawn blocked by blackout: {name}</span>"
+            )
+            return
+        self._handle_action("spawn", name)
+
+    def _on_remove(self, name):
+        if self.blackout_provider():
+            self.log_line.emit(
+                f"<span style='color:#ef4444'>AI remove blocked by blackout: {name}</span>"
+            )
+            return
+        self._handle_action("remove", name)
+
+    def _handle_action(self, kind, name):
+        mode = self._current_mode()
+        label = "spawn" if kind == "spawn" else "remove"
+
+        if mode == "hard":
+            self.log_line.emit(
+                f"<span style='color:#f0a500'>AI → {label}</span> {name} "
+                f"<span style='color:#8a8a8a'>(hard mode)</span>"
+            )
+            if kind == "spawn":
+                self.spawn_requested.emit(name)
+            else:
+                self.remove_requested.emit(name)
+            return
+
+        if mode == "medium":
+            if kind == "spawn":
+                self.spawn_requested.emit(name)
+            else:
+                self.remove_requested.emit(name)
+            self._show_undo_button(kind, name)
+            return
+
+        self.pending_actions.append((kind, name))
+        self._render_action_buttons()
+
+    def _show_undo_button(self, kind, name):
+        undo_btn = QPushButton(f"↩ Undo {kind}: {name}")
+        undo_btn.setStyleSheet(
+            "QPushButton { background-color: #3a2a1a; color: #ff9f26; "
+            "border: 1px solid #5a3a1a; padding: 6px 12px; border-radius: 4px; }"
+            "QPushButton:hover { background-color: #4a3a2a; }"
+        )
+
+        def _do_undo():
+            self.log_line.emit(
+                f"<span style='color:#ef4444'>Undo</span> {kind}: {name}"
+            )
+            if kind == "spawn":
+                self.remove_requested.emit(name)
+            else:
+                self.spawn_requested.emit(name)
+            undo_btn.deleteLater()
+
+        undo_btn.clicked.connect(_do_undo)
+        self.actions_layout.insertWidget(0, undo_btn)
+        self.actions_widget.setVisible(True)
+        QTimer.singleShot(10000, lambda: undo_btn.deleteLater())
+
+    def _render_action_buttons(self):
+        self._clear_actions()
+        if not self.pending_actions:
+            return
+
+        for kind, name in self.pending_actions:
+            btn = QPushButton(f"✅ {kind}: {name}")
+            btn.setStyleSheet(
+                "QPushButton { background-color: #1f3d2b; color: #4ade80; "
+                "border: 1px solid #2b5c3f; padding: 6px 12px; border-radius: 4px; }"
+                "QPushButton:hover { background-color: #2b5c3f; }"
+            )
+
+            def _apply(k=kind, n=name):
+                self.log_line.emit(
+                    f"<span style='color:#22c55e'>Apply</span> {k}: {n}"
+                )
+                if k == "spawn":
+                    self.spawn_requested.emit(n)
+                else:
+                    self.remove_requested.emit(n)
+                self.pending_actions = [
+                    a for a in self.pending_actions if a != (k, n)
+                ]
+                self._render_action_buttons()
+
+            btn.clicked.connect(_apply)
+            self.actions_layout.insertWidget(
+                self.actions_layout.count() - 1, btn
+            )
+
+        cancel_btn = QPushButton("❌ Cancel all")
+        cancel_btn.setStyleSheet(
+            "QPushButton { background-color: #3a1a1a; color: #ef4444; "
+            "border: 1px solid #5a2a2a; padding: 6px 12px; border-radius: 4px; }"
+            "QPushButton:hover { background-color: #4a2a2a; }"
+        )
+        cancel_btn.clicked.connect(self._clear_actions)
+        self.actions_layout.insertWidget(
+            self.actions_layout.count() - 1, cancel_btn
+        )
+        self.actions_widget.setVisible(True)
+
+    def _on_finished(self):
+        self.worker = None
+
+
+# ===========================================================================
+# LogDock
+# ===========================================================================
+
+class LogDock(QDockWidget):
+    def __init__(self, parent=None):
+        super().__init__(tr("session_log"), parent)
+        self.setObjectName("LogDock")
+        container = QWidget()
+        layout = QVBoxLayout(container)
+        layout.setContentsMargins(8, 8, 8, 8)
+        layout.setSpacing(4)
+        toolbar = QHBoxLayout()
+        toolbar.addStretch(1)
+        clear_btn = QPushButton(tr("clear"))
+        clear_btn.setMaximumWidth(80)
+        clear_btn.clicked.connect(self._on_clear)
+        toolbar.addWidget(clear_btn)
+        layout.addLayout(toolbar)
+        self.text = QTextEdit()
+        self.text.setReadOnly(True)
+        layout.addWidget(self.text, 1)
+        self.setWidget(container)
+
+    def _on_clear(self):
+        self.text.clear()
+
+    def append(self, html):
+        self.text.append(html)
+
+
+# ===========================================================================
+# Simple tabs
+# ===========================================================================
+
+def _make_text_tab(placeholder):
+    w = QWidget()
+    layout = QVBoxLayout(w)
+    layout.setContentsMargins(24, 24, 24, 24)
+    te = QTextEdit()
+    te.setPlaceholderText(placeholder)
+    layout.addWidget(te)
+    return w
+
+
+def _make_timeline_tab():
+    w = QWidget()
+    layout = QVBoxLayout(w)
+    layout.setContentsMargins(24, 24, 24, 24)
+    table = QTableWidget(0, 4)
+    table.setHorizontalHeaderLabels([
+        tr("timeline_time"), tr("timeline_fixture"),
+        tr("timeline_action"), tr("timeline_intensity"),
+    ])
+    table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+    layout.addWidget(table)
+    return w
+
+
+def _make_profile_tab(username):
+    w = QWidget()
+    layout = QVBoxLayout(w)
+    layout.setContentsMargins(24, 24, 24, 24)
+    layout.setSpacing(12)
+    title = QLabel(tr("profile_title"))
+    title.setObjectName("Section")
+    layout.addWidget(title)
+    form = QFormLayout()
+    form.addRow(tr("profile_user") + ":", QLabel(username))
+    form.addRow(tr("profile_role") + ":", QLabel(tr("profile_role_admin")))
+    layout.addLayout(form)
+    layout.addStretch(1)
+    return w
+
+
+# ===========================================================================
+# MainWindow
+# ===========================================================================
+
+class MainWindow(QMainWindow):
+    def __init__(self, settings, username="operator"):
+        super().__init__()
+        self.settings = dict(settings or {})
+        self.username = username
+        self.blackout_active = False
+        self._saved_intensities = {}
+
+        self.setWindowTitle(tr("app_title"))
+        self.resize(1440, 900)
+
+        # Studio3DPage FIRST — DirectorTab providers read from it
+        try:
+            self.studio = Studio3DPage()
+        except Exception:
+            import traceback
+            traceback.print_exc()
+            self.studio = QWidget()
+
+        # ---------- central ----------
         central = QWidget()
-        self.setCentralWidget(central)
         root = QVBoxLayout(central)
         root.setContentsMargins(0, 0, 0, 0)
         root.setSpacing(0)
 
-        top = QWidget()
-        top.setFixedHeight(46)
-        top.setObjectName("topBar")
-        tlayout = QHBoxLayout(top)
-        tlayout.setContentsMargins(12, 0, 12, 0)
+        # ---------- top bar ----------
+        topbar = QWidget()
+        topbar.setObjectName("TopBar")
+        tb = QHBoxLayout(topbar)
+        tb.setContentsMargins(16, 10, 16, 10)
+        tb.setSpacing(12)
 
-        title = QLabel("Lightman")
-        title.setStyleSheet("font-size: 18px; font-weight: bold;")
-        self.clock_lbl = QLabel()
-        self.clock_lbl.setStyleSheet("font-family: monospace;")
+        app_label = QLabel(tr("app_title"))
+        app_label.setObjectName("Title")
+        tb.addWidget(app_label)
+        tb.addSpacing(24)
 
-        self.settings_btn = QPushButton("⚙ Settings")
-        self.settings_btn.clicked.connect(self._open_settings)
+        self.blackout_status = QLabel("● Live")
+        self.blackout_status.setStyleSheet("color: #22c55e;")
+        tb.addWidget(self.blackout_status)
 
-        tlayout.addWidget(title)
-        tlayout.addStretch(1)
-        tlayout.addWidget(self.clock_lbl)
-        tlayout.addWidget(self.settings_btn)
-        root.addWidget(top)
+        tb.addStretch(1)
 
-        main_split = QSplitter()
-        main_split.setChildrenCollapsible(False)
+        self.clock_label = QLabel("--:--:--")
+        self.clock_label.setStyleSheet("color: #8a8a8a; font-family: monospace;")
+        tb.addWidget(self.clock_label)
+        tb.addSpacing(12)
 
-        self.sidebar = QListWidget()
-        self.sidebar.setFixedWidth(200)
-        self.sidebar.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-        for item_text in SIDEBAR_ITEMS:
-            self.sidebar.addItem(QListWidgetItem(item_text))
-        self.sidebar.setCurrentRow(0)
-        self.sidebar.currentRowChanged.connect(self._on_sidebar_changed)
-        main_split.addWidget(self.sidebar)
+        self.blackout_btn = QPushButton("⬛ Blackout")
+        self.blackout_btn.clicked.connect(self.toggle_blackout)
+        tb.addWidget(self.blackout_btn)
 
-        self.stack = QStackedWidget()
-        self._build_pages()
-        main_split.addWidget(self.stack)
-        main_split.setStretchFactor(0, 0)
-        main_split.setStretchFactor(1, 1)
+        self.settings_btn = QPushButton("⚙ " + tr("settings"))
+        self.settings_btn.clicked.connect(self.open_settings)
+        tb.addWidget(self.settings_btn)
 
-        root.addWidget(main_split, 1)
+        root.addWidget(topbar)
 
-    def _build_pages(self) -> None:
-        self.stack.addWidget(self._build_studio_page())
-        for _ in range(4):
-            page = QWidget()
-            page.setObjectName("placeholderPage")
-            self.stack.addWidget(page)
+        # ---------- tabs ----------
+        self.tabs = QTabWidget()
+        self.director_tab = DirectorTab(
+            settings_provider=lambda: self.settings,
+            fixtures_provider=self._get_fixtures,
+            dead_zones_provider=self._get_dead_zones,
+            blackout_provider=lambda: self.blackout_active,
+            ai_mode_provider=lambda: self.settings.get("ai_mode", "easy"),
+        )
+        self.director_tab.spawn_requested.connect(self._spawn_fixture)
+        self.director_tab.remove_requested.connect(self._remove_fixture)
 
-    def _build_studio_page(self) -> QWidget:
-        page = QWidget()
-        v = QVBoxLayout(page)
-        v.setContentsMargins(6, 6, 6, 6)
-        v.setSpacing(6)
+        self.tabs.addTab(self.director_tab, tr("tab_director"))
+        self.tabs.addTab(self.studio, tr("tab_studio"))
+        self.tabs.addTab(_make_timeline_tab(), tr("tab_timeline"))
+        self.tabs.addTab(_make_text_tab(tr("script_placeholder")),
+                         tr("tab_script"))
+        self.tabs.addTab(_make_text_tab(tr("rehearsals_placeholder")),
+                         tr("tab_rehearsals"))
+        self.tabs.addTab(_make_profile_tab(self.username), tr("tab_profile"))
+        root.addWidget(self.tabs, 1)
 
-        splitter = QSplitter()
-        splitter.setChildrenCollapsible(False)
+        self.setCentralWidget(central)
 
-        chat_widget = QWidget()
-        cv = QVBoxLayout(chat_widget)
-        cv.setContentsMargins(0, 0, 0, 0)
-        cv.addWidget(QLabel("AI Chat"))
-        self.chat_history = QTextEdit()
-        self.chat_history.setReadOnly(True)
-        cv.addWidget(self.chat_history, 1)
-        self.chat_input = QLineEdit()
-        self.chat_input.setPlaceholderText("Ask the lighting AI…")
-        self.chat_input.returnPressed.connect(self._on_chat_enter)
-        cv.addWidget(self.chat_input)
+        # ---------- log dock ----------
+        self.log_dock = LogDock(self)
+        self.addDockWidget(Qt.BottomDockWidgetArea, self.log_dock)
+        self.director_tab.log_line.connect(self.log_dock.append)
 
-        self.view_3d = Lightman3DView()
-
-        self.asset_browser = AssetBrowserWidget()
-
-        splitter.addWidget(chat_widget)
-        splitter.addWidget(self.view_3d)
-        splitter.addWidget(self.asset_browser)
-        splitter.setStretchFactor(0, 1)
-        splitter.setStretchFactor(1, 2)
-        splitter.setStretchFactor(2, 1)
-
-        v.addWidget(splitter, 1)
-
-        bottom = QHBoxLayout()
-        bottom.addStretch(1)
-        self.btn_start = QPushButton("▶ Start")
-        self.btn_record = QPushButton("⏺ Record")
-        self.btn_stop = QPushButton("⏹ Stop")
-        self.btn_start.clicked.connect(self._on_start)
-        self.btn_record.clicked.connect(self._on_record)
-        self.btn_stop.clicked.connect(self._on_stop)
-        bottom.addWidget(self.btn_start)
-        bottom.addWidget(self.btn_record)
-        bottom.addWidget(self.btn_stop)
-        v.addLayout(bottom)
-
-        return page
-
-    def _start_clock(self) -> None:
+        # ---------- clock ----------
+        self._timer = QTimer(self)
+        self._timer.timeout.connect(self._tick)
+        self._timer.start(1000)
         self._tick()
-        timer = QTimer(self)
-        timer.timeout.connect(self._tick)
-        timer.start(1000)
 
-    def _tick(self) -> None:
-        self.clock_lbl.setText(datetime.now().strftime("%H:%M:%S"))
+        # ---------- Esc = blackout toggle ----------
+        self._esc = QShortcut(QKeySequence(Qt.Key_Escape), self)
+        self._esc.activated.connect(self.toggle_blackout)
 
-    def _on_sidebar_changed(self, row: int) -> None:
-        if 0 <= row < self.stack.count():
-            self.stack.setCurrentRow(row)
+        # ---------- boot log ----------
+        self.log_dock.append(
+            f"<span style='color:#8a8a8a'>Signed in as</span> {self.username}"
+        )
+        mode = self.settings.get("ai_mode", "easy")
+        self.log_dock.append(
+            f"<span style='color:#8a8a8a'>AI mode:</span> "
+            f"<span style='color:#ff8a00'>{mode.upper()}</span>"
+        )
+        if not self.settings.get("api_key"):
+            self.log_dock.append(
+                "<span style='color:#f0a500'>Set API key in Settings to use AI</span>"
+            )
 
-    def _open_settings(self) -> None:
-        dlg = SettingsDialog(self._settings, self)
-        if dlg.exec():
-            self._settings = dlg.settings()
+    # -------------------------------------------------- view accessor
+    def _view(self):
+        """Find the Lightman3DView inside Studio3DPage, defensively."""
+        for attr in ("view", "gl_view", "scene_view", "gl", "_view"):
+            v = getattr(self.studio, attr, None)
+            if v is not None and hasattr(v, "fixtures"):
+                return v
+        return None
 
-    def _on_chat_enter(self) -> None:
-        text = self.chat_input.text().strip()
-        if not text:
+    # -------------------------------------------------- data providers
+    def _get_fixtures(self):
+        v = self._view()
+        if v is None:
+            return []
+        try:
+            return list(v.fixtures)
+        except Exception:
+            return []
+
+    def _get_dead_zones(self):
+        v = self._view()
+        if v is None:
+            return []
+        sd = getattr(v, "_scene_data", {})
+        try:
+            return list(sd.get("dead_zones", []))
+        except Exception:
+            return []
+
+    # -------------------------------------------------- spawn / remove
+    def _spawn_fixture(self, name):
+        if self.blackout_active:
+            self.log_dock.append(
+                f"<span style='color:#ef4444'>Spawn blocked by blackout: {name}</span>"
+            )
             return
-        self.chat_input.clear()
-        self._chat_history.append({"role": "user", "content": text})
-        self.chat_history.append(f'<p style="color:#cfcfdf"><b>You:</b> {text}</p>')
-        self.chat_history.append(
-            '<p style="color:#8f8f9f"><i>AI is thinking…</i></p>'
+        try:
+            if hasattr(self.studio, "spawn_fixture_by_name"):
+                self.studio.spawn_fixture_by_name(name)
+                self.log_dock.append(
+                    f"<span style='color:#22c55e'>Spawned</span> {name}"
+                )
+            else:
+                self.log_dock.append(
+                    "<span style='color:#ef4444'>Studio3DPage has no "
+                    "spawn_fixture_by_name() — spawn skipped</span>"
+                )
+        except Exception as exc:
+            self.log_dock.append(
+                f"<span style='color:#ef4444'>Spawn failed:</span> {exc}"
+            )
+
+    def _remove_fixture(self, name):
+        if self.blackout_active:
+            self.log_dock.append(
+                f"<span style='color:#ef4444'>Remove blocked by blackout: {name}</span>"
+            )
+            return
+        try:
+            if hasattr(self.studio, "remove_fixture_by_name"):
+                self.studio.remove_fixture_by_name(name)
+            else:
+                v = self._view()
+                if v is not None:
+                    v.remove_fixture_by_name(name)
+            self.log_dock.append(
+                f"<span style='color:#f0a500'>Removed</span> {name}"
+            )
+        except Exception as exc:
+            self.log_dock.append(
+                f"<span style='color:#ef4444'>Remove failed:</span> {exc}"
+            )
+
+    # -------------------------------------------------- clock
+    def _tick(self):
+        self.clock_label.setText(datetime.now().strftime("%H:%M:%S"))
+
+    # -------------------------------------------------- settings
+    def open_settings(self):
+        if self.blackout_active:
+            self.log_dock.append(
+                "<span style='color:#ef4444'>Settings blocked — blackout active</span>"
+            )
+            return
+        dlg = SettingsDialog(self.settings, self)
+        if dlg.exec() == QDialog.Accepted:
+            self.settings = dlg.settings
+            set_language(self.settings.get("language", _LANG))
+            self.director_tab.refresh_mode_badge()
+            self.log_dock.append(
+                "<span style='color:#8a8a8a'>Settings saved — mode:</span> "
+                f"<span style='color:#ff8a00'>"
+                f"{self.settings.get('ai_mode', 'easy').upper()}</span>"
+            )
+
+    # -------------------------------------------------- blackout
+    def toggle_blackout(self):
+        if self.blackout_active:
+            self._exit_blackout()
+        else:
+            self._enter_blackout()
+
+    def _capture_intensities(self):
+        v = self._view()
+        saved = {}
+        if v is None:
+            return saved
+        try:
+            fixtures = list(v.fixtures)
+        except Exception:
+            return saved
+        for fx in fixtures:
+            name = fx.get("name")
+            if not name:
+                continue
+            if fx.get("is_work_light") or fx.get("is_mount"):
+                continue
+            try:
+                saved[name] = int(fx.get("intensity", 100))
+            except Exception:
+                saved[name] = 100
+        return saved
+
+    def _enter_blackout(self):
+        v = self._view()
+        if v is None:
+            self.log_dock.append(
+                "<span style='color:#ef4444'>Blackout failed: 3D view not found</span>"
+            )
+            return
+
+        self._saved_intensities = self._capture_intensities()
+
+        try:
+            if hasattr(self.studio, "enter_blackout"):
+                self.studio.enter_blackout()
+            else:
+                v.apply_blackout()
+        except Exception:
+            import traceback
+            traceback.print_exc()
+            self.log_dock.append(
+                "<span style='color:#ef4444'>Blackout failed (exception)</span>"
+            )
+            return
+
+        try:
+            ok = v.verify_blackout()
+        except Exception:
+            ok = False
+
+        if not ok:
+            self.log_dock.append(
+                f"<span style='color:#ef4444'>{tr('blackout_incomplete')}</span>"
+            )
+            return
+
+        self.blackout_active = True
+        self.director_tab.set_input_enabled(False)
+        self.settings_btn.setEnabled(False)
+        self.blackout_status.setText("● " + tr("blackout_active"))
+        self.blackout_status.setStyleSheet("color: #ef4444;")
+        self.blackout_btn.setText("▶ Resume")
+        self.log_dock.append(
+            f"<span style='color:#ef4444'><b>{tr('blackout_active')}</b></span>"
         )
 
-        self._worker = ChatWorker(self._settings, text, self._chat_history)
-        self._worker.response.connect(self._on_chat_response)
-        self._worker.error.connect(self._on_chat_error)
-        self._worker.start()
+    def _exit_blackout(self):
+        v = self._view()
+        try:
+            if hasattr(self.studio, "exit_blackout"):
+                self.studio.exit_blackout()
+            elif v is not None:
+                v.restore_intensities(self._saved_intensities)
+        except Exception:
+            import traceback
+            traceback.print_exc()
 
-    def _on_chat_response(self, response: str) -> None:
-        self._chat_history.append({"role": "assistant", "content": response})
-        self.chat_history.append(
-            f'<p style="color:#a5d6ff"><b>AI:</b> {response}</p>'
-        )
-        self.chat_history.append("<hr>")
-
-    def _on_chat_error(self, message: str) -> None:
-        self.chat_history.append(
-            f'<p style="color:#ff8a80"><b>AI error:</b> {message}</p>'
-        )
-        self.chat_history.append("<hr>")
-
-    def _on_start(self) -> None:
-        self.statusBar().showMessage("Started", 2500)
-
-    def _on_record(self) -> None:
-        self.statusBar().showMessage("Recording", 2500)
-
-    def _on_stop(self) -> None:
-        self.statusBar().showMessage("Stopped", 2500)
+        self.blackout_active = False
+        self._saved_intensities = {}
+        self.director_tab.set_input_enabled(True)
+        self.settings_btn.setEnabled(True)
+        self.blackout_status.setText("● Live")
+        self.blackout_status.setStyleSheet("color: #22c55e;")
+        self.blackout_btn.setText("⬛ Blackout")
+        self.log_dock.append("<span style='color:#22c55e'>Resumed — live</span>")
 
 
-# ----------------------------------------------------------------------
-# Entry point
-# ----------------------------------------------------------------------
+# ===========================================================================
+# main()
+# ===========================================================================
+
+def _load_settings():
+    path = os.path.join(_PROJECT_ROOT, "data", "settings.json")
+    if os.path.isfile(path):
+        try:
+            with open(path, "r", encoding="utf-8") as fh:
+                return json.load(fh)
+        except Exception:
+            pass
+    return {}
 
 
-def main() -> None:
+def main():
     app = QApplication(sys.argv)
-    app.setStyle("Fusion")
-    theme_path = os.path.join(os.path.dirname(__file__), "theme.qss")
-    if os.path.exists(theme_path):
-        with open(theme_path, "r", encoding="utf-8") as f:
-            app.setStyleSheet(f.read())
-    ensure_default_user()
+    try:
+        ensure_default_user()
+    except Exception:
+        pass
+
+    settings = _load_settings()
+    set_language(settings.get("language", "en"))
+
+    theme_path = os.path.join(_PROJECT_ROOT, "src", "director", "theme.qss")
+    if os.path.isfile(theme_path):
+        with open(theme_path, "r", encoding="utf-8") as fh:
+            app.setStyleSheet(fh.read())
+
     login = LoginDialog()
     if login.exec() != QDialog.Accepted:
         return 0
-    win = MainWindow()
+
+    username = login.username_input.text().strip() or "operator"
+    win = MainWindow(settings, username=username)
     win.show()
-    sys.exit(app.exec())
+    return app.exec()
 
 
 if __name__ == "__main__":
-    main()
-
+    sys.exit(main())

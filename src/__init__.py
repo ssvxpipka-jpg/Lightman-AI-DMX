@@ -1,1 +1,1 @@
-"""Lightman source package."""
+""""Studio 3D package — exposes Studio3DPage."""

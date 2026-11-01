@@ -3,16 +3,21 @@
 from __future__ import annotations
 
 import json
+import logging
 from pathlib import Path
 
-from PySide6.QtCore import Qt, Signal
+from PySide6.QtCore import QMimeData, Qt, QEvent, QPoint, Signal
+from PySide6.QtGui import QDrag
 from PySide6.QtWidgets import (
+    QApplication,
     QLineEdit,
     QTreeWidget,
     QTreeWidgetItem,
     QVBoxLayout,
     QWidget,
 )
+
+logger = logging.getLogger(__name__)
 
 CATALOG_PATH = Path("fixtures_db/fixtures_catalog.json")
 
@@ -108,8 +113,11 @@ class AssetBrowserWidget(QWidget):
         self.tree.setColumnWidth(0, 200)
         self.tree.setAlternatingRowColors(True)
         self.tree.setUniformRowHeights(True)
+        self.tree.setDragEnabled(True)
+        self.tree.setSelectionMode(QTreeWidget.SelectionMode.SingleSelection)
         # SINGLE CLICK — itemClicked fires on left-click release.
         self.tree.itemClicked.connect(self._on_item_clicked)
+        self.tree.installEventFilter(self)
         layout.addWidget(self.tree, 1)
 
     # ------------------------------------------------------------------
@@ -187,3 +195,38 @@ class AssetBrowserWidget(QWidget):
         payload = item.data(0, Qt.ItemDataRole.UserRole)
         if isinstance(payload, dict):
             self.fixture_selected.emit(dict(payload))
+
+    # ------------------------------------------------------------------
+    # Drag & Drop
+    # ------------------------------------------------------------------
+
+    def eventFilter(self, obj, event) -> None:
+        if obj is self.tree:
+            if event.type() == QEvent.Type.MouseButtonPress:
+                self._drag_start_pos = event.position()
+            elif event.type() == QEvent.Type.MouseMove:
+                if event.buttons() & Qt.MouseButton.LeftButton:
+                    if hasattr(self, "_drag_start_pos"):
+                        diff = event.position() - self._drag_start_pos
+                        if diff.manhattanLength() >= QApplication.startDragDistance():
+                            self._start_drag()
+                            return True
+        return super().eventFilter(obj, event)
+
+    def _start_drag(self) -> None:
+        item = self.tree.currentItem()
+        if not item:
+            return
+        payload = item.data(0, Qt.ItemDataRole.UserRole)
+        if not isinstance(payload, dict):
+            return
+
+        mime_data = QMimeData()
+        mime_data.setData(
+            "application/x-lightman-fixture",
+            json.dumps(payload).encode("utf-8"),
+        )
+
+        drag = QDrag(self.tree)
+        drag.setMimeData(mime_data)
+        drag.exec(Qt.DropAction.CopyAction)

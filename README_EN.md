@@ -1,59 +1,133 @@
-# 🎭 Lightman — AI Stage Lighting Automation
+# Lightman
 
-**[🇷🇺 Русская версия](README.md) | [🇬🇧 English version]**
+**Fast, no-nonsense director tool for operators who don't want another 20kg console.**
 
-**Lightman** is a completely free, open-source ecosystem for AI-powered stage lighting automation. Forget manual beam focusing — the AI will track actors, sync with music, and understand your script.
+Open-source stage lighting control for small venues and rental houses. Desktop, macOS (Apple Silicon), Python + PySide6. An AI assistant sees the 3D scene and can drive it. No server, no accounts, no telemetry — everything runs locally.
 
-## ✨ Key Features
-*   🖥 **Director (The Brain)**: DaVinci Resolve-style dark UI, 3D stage with fixture placement, AI chat, cue timeline.
-*   🧠 **Smart AI (BYOK)**: Connect to any cloud provider using your own API key (no subscriptions).
-*   📚 **Local RAG**: Load your script and fixtures — the AI learns them *instantly* and for free right on your machine.
-*   🎵 **Sound (The Ears)**: System audio capture (BlackHole), BPM/beat detection, OSC transmission.
-*   💡 **Light (The Hands)**: Direct connection to console OS (Titan OS, grandMA3 OS, ChamSys OS, ETC Eos OS, QLC+ OS).
+---
 
-## 🚀 Installation (macOS)
-Ready-to-use installers for Mac users are available!
+### What it is
 
-1. Go to the **[Releases](https://github.com/ssvxpuk/lightman/releases)** page.
-2. Download:
-   * `Lightman.dmg` (Main app)
-   * `LightmanSound.dmg` (Sound app)
-   * `LightmanLight.dmg` (Lighting app)
-3. Open the `.dmg` and drag the apps to your **Applications** folder.
-4. *Note:* If macOS says "App is damaged", run this in Terminal: `xattr -cr /Applications/Lightman.app`.
+Lightman is a desktop application for controlling stage lighting in small venues: school halls, theatres, rental houses. Instead of a heavy console — a laptop, a 3D viewport, and an AI assistant that sees the scene and understands what's going on.
 
-### 🐧 Windows and Linux
-No pre-built `.exe` or `.deb` yet, but you can build them from source:
-*   **Windows**: Install Python 3.12, run `pip install -r requirements.txt`, and execute `scripts\build_win.bat`.
-*   **Linux**: Run `bash scripts/build_linux.sh`.
+Everything runs **locally**. No servers, no accounts, no cloud telemetry. Your scenes, scripts and knowledge base never leave the machine.
 
-## 🧠 How to setup AI (BYOK)
-We don't charge for AI usage. You use your own key (Bring Your Own Key). It's fast and free.
+### Features
 
-1. Register with any free provider:
-   * **[Groq](https://console.groq.com)** (Fastest, no credit card)
-   * **[OpenRouter](https://openrouter.ai)** (Has free models)
-   * **[ZvenoAI](https://zveno.ai)** (Works in Russia without VPN)
-2. Copy your API key.
-3. In the **Director** app, click **⚙ Settings** -> **AI Provider** tab.
-4. Paste the key and click **Save**.
-*A popup will confirm the AI has been trained on your fixtures.*
+**Director — AI chat**
 
-## 🛠 Tech Stack
-*   **UI**: PySide6 + PyQtGraph (OpenGL)
-*   **AI**: LangGraph + ChatOpenAI (BYOK)
-*   **RAG**: ChromaDB (Local, no cloud)
-*   **Audio**: Librosa + Sounddevice
-*   **Network**: Python-OSC
+- Pick your LLM: Groq, OpenRouter, Gemini, Mistral, Cerebras, or any OpenAI-compatible endpoint (including local Ollama and LM Studio)
+- The AI sees the current scene: fixtures, positions, intensities, dead zones
+- Can spawn and remove fixtures through hidden `[SPAWN: …]` / `[REMOVE: …]` markers — the operator only sees the result, never the markers
 
-## 🗺️ Roadmap
-- [x] Beautiful UI and 3D scene
-- [x] AI integration and local RAG training
-- [x] Cross-platform apps (Director, Sound, Light)
-- [ ] Lightman Server OS (v2.0)
-- [ ] MIDI controllers support
+**Three AI autonomy modes** (Settings → AI Mode; they shape both the prompt and the behaviour)
 
-## 📄 License
-Distributed under the **MIT License**. Use it in schools, theaters, and weddings.
+- 🟢 **Easy** — AI proposes, ✅ / ❌ buttons appear under the answer, the operator decides
+- 🟡 **Medium** — AI applies routine actions itself, an **Undo** button lives for 10 seconds
+- 🔴 **Hard** — AI applies instantly, no undo. Only Blackout can stop it
 
-*Made with love for theater and hatred for manual beam focusing.* 🎭
+**Studio 3D**
+
+- Real-time OpenGL viewport (pyqtgraph)
+- Fixtures, trusses (truss / stand / box), dead zones
+- Intensity 0–100 per fixture — currently drives mesh transparency, later goes into real DMX
+- Click to select, eraser to delete
+- Scene save/load to `data/scene.json`
+
+**Blackout — absolute override**
+
+- `Esc` or the ⬛ **Blackout** button → instant LOCK
+- Freezes: chat, Settings, AI spawn/remove
+- Work light drops to **2 %** — the stage never goes fully dark
+- The AI **cannot** cancel, continue, or suggest continuing a Blackout
+- ▶ **Resume** restores each fixture's pre-blackout intensity
+- If even one fixture failed to hit 0 % — the LOCK **does not engage** and the operator gets a warning in Session Log
+
+**Dead zones — a hard no-fly list**
+
+- Lasers and bright beams are never aimed into a dead zone's bounding box
+- The rule is baked into the AI system prompt and visible in 3D
+- Lasers in dead zones are forbidden at the architecture level
+
+**Auth and shell**
+
+- Local login / sign-up (JSON, no server)
+- Six tabs: Director · Studio 3D · Timeline · Script · Rehearsals · Profile
+- Session Log at the bottom with a colour-coded event feed
+- UI in English and Russian
+- DaVinci-style dark theme, accent `#ff8a00`
+
+**Local AI training (RAG)**
+
+- Knowledge base built from show scripts and the fixture catalogue
+- Embeddings via `DefaultEmbeddingFunction` — **no OpenAI key**
+- Storage: `.lightman_cache/rag`
+- Text never leaves the machine
+
+### Installation
+
+**From `.dmg` (Apple Silicon: M1 / M2 / M3 / M4)**
+
+- macOS 12 Monterey or newer
+- Ad-hoc signature → Gatekeeper complains on first launch. One command:
+
+```bash
+xattr -cr /Applications/Lightman.app
+```
+
+**From source**
+
+```bash
+python src/director/main.py
+```
+
+### Roadmap
+
+**Now (v1.x — stabilisation)**
+- Work light UI toggle, work light fixtures in the catalogue
+- Tightening the `ui_3d.py` ↔ `studio_page.py` contract
+- Loading the full fixture catalogue (300+ units, LED bars)
+
+**Soon (v1.3+)**
+- DMX record / playback
+- BPM sync with the Sound app
+
+**Later (v2.0+)**
+- Fail-safe: on DMX loss the AI holds state and does not take over
+
+**Further out (v4.0+)**
+- CV for broadcasts (Laplacian variance already lives in `haze_analyzer`)
+- Paid modules: extended AI backup for large venues, tracking, intercoms
+
+### Tech stack
+
+- Python 3.10+ (tested on 3.11)
+- PySide6, pyqtgraph, OpenGL
+- LangGraph + LangChain Core
+- ChromaDB (local RAG)
+- PyInstaller + dmgbuild (`.dmg` packaging)
+
+### Repo layout
+
+```
+Lightman/
+├── src/director/
+│   ├── main.py               # shell, tabs, settings, blackout
+│   ├── ui_3d.py              # OpenGL viewport
+│   ├── theme.qss             # dark theme
+│   └── studio_3d/            # 3D tab: panels, tools
+├── shared/
+│   ├── auth.py               # local login
+│   ├── rag_init.py           # knowledge base
+│   ├── agents_config.py      # LangGraph: director + specialists
+│   └── i18n.py               # translations
+├── fixtures_db/
+│   └── fixtures_catalog.json
+└── data/
+    ├── script.txt            # optional, fed into RAG
+    └── settings.json         # created on save (.gitignore'd)
+```
+
+### License
+
+MIT. **Open Core**: the core stays free forever, paid tiers only add new modules in v4+.

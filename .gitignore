@@ -67,3 +67,23 @@ vendor/
 .lightman_cache/
 assets/models/
 *.gguf
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Lightman runtime
+data/settings.json
+.lightman_cache/
+data/scene.json
+
+# Build artifacts
+build/
+dist/
+*.dmg
+*.spec
+
+# macOS
+.DS_Store
