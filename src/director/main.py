@@ -44,7 +44,6 @@ from shared.auth import (  # noqa: E402
 )
 from shared.rag_init import train_knowledge_base  # noqa: E402
 from shared.agents_config import build_graph  # noqa: E402
-from src.director.studio_3d import Studio3DPage  # noqa: E402
 
 
 # ===========================================================================
@@ -279,22 +278,7 @@ class ChatWorker(QThread):
         return "\n".join(lines)
 
     def _format_library(self):
-        try:
-            from src.director.studio_3d.panels.fixture_library import (
-                _load_catalogue, _HARDCODED,
-            )
-            names = []
-            for fx in _load_catalogue()[:60]:
-                if fx.get("name"):
-                    names.append(str(fx["name"]))
-            for items in _HARDCODED.values():
-                for fx in items:
-                    names.append(fx["name"])
-            if not names:
-                return ""
-            return "Fixture names you can [SPAWN: ...]: " + ", ".join(names)
-        except Exception:
-            return ""
+        return ""
 
     def run(self):
         import traceback
@@ -846,6 +830,10 @@ class LogDock(QDockWidget):
         clear_btn.setMaximumWidth(80)
         clear_btn.clicked.connect(self._on_clear)
         toolbar.addWidget(clear_btn)
+        copy_all_btn = QPushButton(tr("copy_all"))
+        copy_all_btn.setMaximumWidth(100)
+        copy_all_btn.clicked.connect(self._on_copy_all)
+        toolbar.addWidget(copy_all_btn)
         layout.addLayout(toolbar)
         self.text = QTextEdit()
         self.text.setReadOnly(True)
@@ -854,6 +842,59 @@ class LogDock(QDockWidget):
 
     def _on_clear(self):
         self.text.clear()
+
+    def _on_copy_all(self):
+        """Copy all log text to clipboard."""
+        try:
+            clipboard = self.text.parent().parent().window().clipboard()
+            clipboard.setText(self.text.toPlainText())
+        except Exception:
+            pass
+
+    def append(self, html):
+        self.text.append(html)
+
+
+class LogTab(QWidget):
+    """A QWidget tab that displays session logs with Copy All functionality."""
+    log_line = Signal(str)
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(8, 8, 8, 8)
+        layout.setSpacing(4)
+
+        toolbar = QHBoxLayout()
+        toolbar.addStretch(1)
+        clear_btn = QPushButton(tr("clear"))
+        clear_btn.setMaximumWidth(80)
+        clear_btn.clicked.connect(self._on_clear)
+        toolbar.addWidget(clear_btn)
+
+        copy_all_btn = QPushButton(tr("copy_all"))
+        copy_all_btn.setMaximumWidth(100)
+        copy_all_btn.clicked.connect(self._on_copy_all)
+        toolbar.addWidget(copy_all_btn)
+
+        layout.addLayout(toolbar)
+
+        self.text = QTextEdit()
+        self.text.setReadOnly(True)
+        layout.addWidget(self.text, 1)
+
+        self.log_line.connect(self.append)
+
+    def _on_clear(self):
+        self.text.clear()
+
+    def _on_copy_all(self):
+        """Copy all log text to clipboard."""
+        try:
+            clipboard = QApplication.clipboard()
+            clipboard.setText(self.text.toPlainText())
+        except Exception:
+            pass
 
     def append(self, html):
         self.text.append(html)
@@ -959,6 +1000,11 @@ class MainWindow(QMainWindow):
         self.blackout_btn.clicked.connect(self.toggle_blackout)
         tb.addWidget(self.blackout_btn)
 
+        # ADD: BlenderDMX 3D Editor button
+        self.blender_dmx_btn = QPushButton("Open BlenderDMX 3D Editor")
+        self.blender_dmx_btn.clicked.connect(self._on_blender_dmx_triggered)
+        tb.addWidget(self.blender_dmx_btn)
+
         self.settings_btn = QPushButton("⚙ " + tr("settings"))
         self.settings_btn.clicked.connect(self.open_settings)
         tb.addWidget(self.settings_btn)
@@ -989,10 +1035,10 @@ class MainWindow(QMainWindow):
 
         self.setCentralWidget(central)
 
-        # ---------- log dock ----------
-        self.log_dock = LogDock(self)
-        self.addDockWidget(Qt.BottomDockWidgetArea, self.log_dock)
-        self.director_tab.log_line.connect(self.log_dock.append)
+        # ---------- log tab ----------
+        self.log_tab = LogTab(self)
+        self.tabs.addTab(self.log_tab, tr("Logs"))
+        self.director_tab.log_line.connect(self.log_tab.append)
 
         # ---------- clock ----------
         self._timer = QTimer(self)
@@ -1005,16 +1051,16 @@ class MainWindow(QMainWindow):
         self._esc.activated.connect(self.toggle_blackout)
 
         # ---------- boot log ----------
-        self.log_dock.append(
+        self.log_tab.append(
             f"<span style='color:#8a8a8a'>Signed in as</span> {self.username}"
         )
         mode = self.settings.get("ai_mode", "easy")
-        self.log_dock.append(
+        self.log_tab.append(
             f"<span style='color:#8a8a8a'>AI mode:</span> "
             f"<span style='color:#ff8a00'>{mode.upper()}</span>"
         )
         if not self.settings.get("api_key"):
-            self.log_dock.append(
+            self.log_tab.append(
                 "<span style='color:#f0a500'>Set API key in Settings to use AI</span>"
             )
 
@@ -1050,29 +1096,29 @@ class MainWindow(QMainWindow):
     # -------------------------------------------------- spawn / remove
     def _spawn_fixture(self, name):
         if self.blackout_active:
-            self.log_dock.append(
+            self.log_tab.append(
                 f"<span style='color:#ef4444'>Spawn blocked by blackout: {name}</span>"
             )
             return
         try:
             if hasattr(self.studio, "spawn_fixture_by_name"):
                 self.studio.spawn_fixture_by_name(name)
-                self.log_dock.append(
+                self.log_tab.append(
                     f"<span style='color:#22c55e'>Spawned</span> {name}"
                 )
             else:
-                self.log_dock.append(
+                self.log_tab.append(
                     "<span style='color:#ef4444'>Studio3DPage has no "
                     "spawn_fixture_by_name() — spawn skipped</span>"
                 )
         except Exception as exc:
-            self.log_dock.append(
+            self.log_tab.append(
                 f"<span style='color:#ef4444'>Spawn failed:</span> {exc}"
             )
 
     def _remove_fixture(self, name):
         if self.blackout_active:
-            self.log_dock.append(
+            self.log_tab.append(
                 f"<span style='color:#ef4444'>Remove blocked by blackout: {name}</span>"
             )
             return
@@ -1083,11 +1129,11 @@ class MainWindow(QMainWindow):
                 v = self._view()
                 if v is not None:
                     v.remove_fixture_by_name(name)
-            self.log_dock.append(
+            self.log_tab.append(
                 f"<span style='color:#f0a500'>Removed</span> {name}"
             )
         except Exception as exc:
-            self.log_dock.append(
+            self.log_tab.append(
                 f"<span style='color:#ef4444'>Remove failed:</span> {exc}"
             )
 
@@ -1098,7 +1144,7 @@ class MainWindow(QMainWindow):
     # -------------------------------------------------- settings
     def open_settings(self):
         if self.blackout_active:
-            self.log_dock.append(
+            self.log_tab.append(
                 "<span style='color:#ef4444'>Settings blocked — blackout active</span>"
             )
             return
@@ -1107,7 +1153,7 @@ class MainWindow(QMainWindow):
             self.settings = dlg.settings
             set_language(self.settings.get("language", _LANG))
             self.director_tab.refresh_mode_badge()
-            self.log_dock.append(
+            self.log_tab.append(
                 "<span style='color:#8a8a8a'>Settings saved — mode:</span> "
                 f"<span style='color:#ff8a00'>"
                 f"{self.settings.get('ai_mode', 'easy').upper()}</span>"
@@ -1144,7 +1190,7 @@ class MainWindow(QMainWindow):
     def _enter_blackout(self):
         v = self._view()
         if v is None:
-            self.log_dock.append(
+            self.log_tab.append(
                 "<span style='color:#ef4444'>Blackout failed: 3D view not found</span>"
             )
             return
@@ -1159,7 +1205,7 @@ class MainWindow(QMainWindow):
         except Exception:
             import traceback
             traceback.print_exc()
-            self.log_dock.append(
+            self.log_tab.append(
                 "<span style='color:#ef4444'>Blackout failed (exception)</span>"
             )
             return
@@ -1170,7 +1216,7 @@ class MainWindow(QMainWindow):
             ok = False
 
         if not ok:
-            self.log_dock.append(
+            self.log_tab.append(
                 f"<span style='color:#ef4444'>{tr('blackout_incomplete')}</span>"
             )
             return
@@ -1181,7 +1227,7 @@ class MainWindow(QMainWindow):
         self.blackout_status.setText("● " + tr("blackout_active"))
         self.blackout_status.setStyleSheet("color: #ef4444;")
         self.blackout_btn.setText("▶ Resume")
-        self.log_dock.append(
+        self.log_tab.append(
             f"<span style='color:#ef4444'><b>{tr('blackout_active')}</b></span>"
         )
 
@@ -1203,7 +1249,157 @@ class MainWindow(QMainWindow):
         self.blackout_status.setText("● Live")
         self.blackout_status.setStyleSheet("color: #22c55e;")
         self.blackout_btn.setText("⬛ Blackout")
-        self.log_dock.append("<span style='color:#22c55e'>Resumed — live</span>")
+        self.log_tab.append("<span style='color:#22c55e'>Resumed — live</span>")
+
+    # -------------------------------------------------- BlenderDMX 3D Editor
+    def _on_blender_dmx_triggered(self):
+        """Export scene to MVR and launch bundled Blender with BlenderDMX."""
+        try:
+            from scripts.export_to_mvr import export_scene_to_mvr
+        except ImportError:
+            self.log_tab.append(
+                "<span style='color:#ef4444'>BlenderDMX export: export_to_mvr module not found</span>"
+            )
+            return
+
+        # Find bundled Blender
+        blender_app = self._find_bundled_blender()
+        if not blender_app:
+            self.log_tab.append(
+                "<span style='color:#ef4444'>Bundled Blender.app not found. "
+                "Falling back to ui_3d.py (in-app 3D view).</span>"
+            )
+            return
+
+        # Export scene to MVR
+        scene_path = os.path.join(_PROJECT_ROOT, "data", "scene.json")
+        if not os.path.isfile(scene_path):
+            self.log_tab.append(
+                "<span style='color:#ef4444'>scene.json not found — cannot export MVR</span>"
+            )
+            return
+
+        try:
+            with open(scene_path, "r", encoding="utf-8") as fh:
+                scene_data = json.load(fh)
+        except Exception as exc:
+            self.log_tab.append(
+                f"<span style='color:#ef4444'>Failed to read scene.json: {exc}</span>"
+            )
+            return
+
+        mvr_path = os.path.join(_PROJECT_ROOT, "data", "exported_scene.mvr")
+        try:
+            export_scene_to_mvr(scene_data, mvr_path)
+            self.log_tab.append(
+                f"<span style='color:#22c55e'>Exported MVR to {mvr_path}</span>"
+            )
+        except Exception as exc:
+            self.log_tab.append(
+                f"<span style='color:#ef4444'>MVR export failed: {exc}</span>"
+            )
+            return
+
+        # Launch Blender with BlenderDMX
+        blender_exec = os.path.join(blender_app, "Contents", "MacOS", "Blender")
+        if not os.path.isfile(blender_exec):
+            self.log_tab.append(
+                f"<span style='color:#ef4444'>Blender executable not found at {blender_exec}</span>"
+            )
+            return
+
+        # Read version file
+        version_file = os.path.join(blender_app, "Contents", "Resources", "blender_version.txt")
+        blender_version = "unknown"
+        if os.path.isfile(version_file):
+            try:
+                with open(version_file, "r") as fh:
+                    blender_version = fh.read().strip()
+            except Exception:
+                pass
+
+        # Build command: enable BlenderDMX and open MVR
+        cmd = [
+            blender_exec,
+            "--python-expr",
+            (
+                "import bpy; "
+                "bpy.ops.preferences.addon_enable(module='blenderdmx'); "
+                "bpy.ops.wm.open_mainfile(filepath='" + mvr_path + "'); "
+                "bpy.ops.wm.save_as_mainfile(filepath='" + mvr_path + "')"
+            ),
+        ]
+
+        self.log_tab.append(
+            f"<span style='color:#8a8a8a'>Launching Blender {blender_version} with BlenderDMX...</span>"
+        )
+
+        try:
+            import subprocess
+            proc = subprocess.Popen(
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                bufsize=1,
+            )
+            # Capture output asynchronously
+            from PySide6.QtCore import QThread
+            self._blender_proc = proc
+            self._blender_log_thread = _BlenderLogReader(proc, self.log_tab)
+            self._blender_log_thread.log_line.connect(self.log_tab.append)
+            self._blender_log_thread.start()
+        except Exception as exc:
+            self.log_tab.append(
+                f"<span style='color:#ef4444'>Failed to launch Blender: {exc}</span>"
+            )
+
+    def _find_bundled_blender(self):
+        """Locate the bundled Blender.app in resources."""
+        candidates = [
+            os.path.join(_PROJECT_ROOT, "src", "director", "resources", "Blender.app"),
+            os.path.join(_PROJECT_ROOT, "resources", "Blender.app"),
+        ]
+        for path in candidates:
+            blender_exec = os.path.join(path, "Contents", "MacOS", "Blender")
+            if os.path.isfile(blender_exec):
+                return path
+        return None
+
+
+# ===========================================================================
+# Blender log reader thread
+# ===========================================================================
+
+class _BlenderLogReader(QThread):
+    """Reads stdout/stderr from a running Blender process and emits log lines."""
+    log_line = Signal(str)
+
+    def __init__(self, proc, log_dock, parent=None):
+        super().__init__(parent)
+        self._proc = proc
+        self._log_dock = log_dock
+
+    def run(self):
+        try:
+            for line in iter(self._proc.stdout.readline, ""):
+                if not line:
+                    break
+                self.log_line.emit(f"<span style='color:#8a8a8a'>[Blender]</span> {line.rstrip()}")
+            self._proc.stdout.close()
+        except Exception:
+            pass
+
+        try:
+            for line in iter(self._proc.stderr.readline, ""):
+                if not line:
+                    break
+                self.log_line.emit(f"<span style='color:#ef4444'>[Blender]</span> {line.rstrip()}")
+            self._proc.stderr.close()
+        except Exception:
+            pass
+
+        self._proc.wait()
 
 
 # ===========================================================================
@@ -1235,6 +1431,15 @@ def main():
     if os.path.isfile(theme_path):
         with open(theme_path, "r", encoding="utf-8") as fh:
             app.setStyleSheet(fh.read())
+
+    # ── NEW: Auto-load fixtures catalog into RAG ────────────────────────
+    fixtures_catalog = os.path.join(_PROJECT_ROOT, "data", "fixtures_catalog.json")
+    if os.path.isfile(fixtures_catalog):
+        print(f"Auto-loading fixtures catalog into RAG: {fixtures_catalog}")
+        with open(fixtures_catalog, "r", encoding="utf-8") as fh:
+            ts = train_knowledge_base(fh.read(), "fixtures_catalog")
+        print(f"RAG trained with {ts} chunks from fixtures catalog")
+    # └─────────────────────────────────────────────────────────────────────
 
     login = LoginDialog()
     if login.exec() != QDialog.Accepted:

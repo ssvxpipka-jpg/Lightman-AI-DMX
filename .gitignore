@@ -86,4 +86,3 @@ dist/
 *.spec
 
 # macOS
-.DS_Store

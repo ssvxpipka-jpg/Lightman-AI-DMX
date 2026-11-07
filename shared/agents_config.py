@@ -116,8 +116,10 @@ PROVIDER_PRESETS: Dict[str, Dict[str, str]] = {
 DIRECTOR_PROMPT = (
     "You are the Director agent for Lightman. Given the scene spatial data "
     "(cameras, hazers, stage bounds, no-laser zones, tracking camera, "
-    "operator notes) and the user request, reply with EXACTLY one word: "
-    "audio, tracking, light, live_light, researcher, or assistant."
+    "and the Vision Report from EpocCam and the user request, reply with EXACTLY one word: "
+    "{haze: percentage 0-100, actors: [{id, center: [x,y]}], beams: [{id, center: [x,y]}]}"
+    "Rules: If haze is low (<30%), suggest smoke. If actors are at [X,Y], aim lights there. "
+    "Do not aim at walls or audience. If haze is high (>70%), reduce instrument intensity."
 )
 
 AUDIO_PROMPT = (
@@ -128,12 +130,20 @@ AUDIO_PROMPT = (
 TRACKING_PROMPT = (
     "You are the Tracking agent for Lightman. Handle performer tracking, "
     "camera positions, follow-spot logic, and positional data."
+    "{Vision Report integration: Use the EpocCam vision data to track performer positions. "
+    "If actors are detected at [X,Y], update track marks. If haze is high, "
+    "account for reduced visibility in tracking confidence.}"
 )
 
 LIGHT_PROMPT = (
     "You are the Light agent for Lightman. Handle fixture selection, DMX, "
     "colors, gobos, and static lighting. YOU MUST REFUSE any laser path that "
     "intersects a camera or enters a no-laser zone, and explain why."
+    "{Vision Report integration: "
+    "If haze is low (<30%), suggest smoke machine. "
+    "If actors are at [X,Y], prioritize lighting those positions. "
+    "If beams are detected at [X,Y], avoid placing fixture beams at those coordinates. "
+    "Do not aim lights at walls or the audience area.}"
 )
 
 LIVE_LIGHT_PROMPT = (

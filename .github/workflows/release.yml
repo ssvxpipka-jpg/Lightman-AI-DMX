@@ -1,0 +1,161 @@
+name: Lightman v1.1.1 Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-macos:
+    name: Build macOS Installers
+    runs-on: macos-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies with /usr/bin/python3
+        run: /usr/bin/python3 -m pip install -r requirements.txt pyinstaller
+
+      - name: Bundle Blender and BlenderDMX addon
+        run: /usr/bin/python3 scripts/bundle_blender.py
+
+      - name: Build Director (universal2)
+        run: pyinstaller Lightman.spec --target-arch universal2
+
+      - name: Build Sound (windowed)
+        run: pyinstaller --windowed --name LightmanSound src/sound/main.py
+
+      - name: Build Light (windowed)
+        run: pyinstaller --windowed --name LightmanLight src/light/main.py
+
+      - name: Create DMG for Director
+        run: |
+          hdiutil create -volname "Lightman Director" -srcfolder dist/Lightman.app -ov -format UDZO dist/Lightman Director.dmg
+
+      - name: Create DMG for Sound
+        run: |
+          hdiutil create -volname "Lightman Sound" -srcfolder dist/LightmanSound.app -ov -format UDZO dist/Lightman Sound.dmg
+
+      - name: Create DMG for Light
+        run: |
+          hdiutil create -volname "Lightman Light" -srcfolder dist/LightmanLight.app -ov -format UDZO dist/Lightman Light.dmg
+
+      - name: Upload macOS artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: macOS-installers
+          path: |
+            dist/Lightman Director.dmg
+            dist/Lightman Sound.dmg
+            dist/Lightman Light.dmg
+
+  build-windows:
+    name: Build Windows Installers
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: cmd.exe
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt pyinstaller
+
+      - name: Build Director
+        run: pyinstaller Lightman.spec
+
+      - name: Build Sound (windowed)
+        run: pyinstaller --windowed --name LightmanSound src/sound/main.py
+
+      - name: Build Light (windowed)
+        run: pyinstaller --windowed --name LightmanLight src/light/main.py
+
+      - name: Upload Windows artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Windows-installers
+          path: |
+            dist/Lightman.exe
+            dist/LightmanSound.exe
+            dist/LightmanLight.exe
+
+  build-linux:
+    name: Build Linux Installers
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt pyinstaller
+
+      - name: Build Director
+        run: pyinstaller Lightman.spec
+
+      - name: Build Sound (windowed)
+        run: pyinstaller --windowed --name LightmanSound src/sound/main.py
+
+      - name: Build Light (windowed)
+        run: pyinstaller --windowed --name LightmanLight src/light/main.py
+
+      - name: Upload Linux artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Linux-installers
+          path: |
+            dist/Lightman
+            dist/LightmanSound
+            dist/LightmanLight
+
+  create-release:
+    name: Create GitHub Release
+    needs: [build-macos, build-windows, build-linux]
+    if: github.event_name == 'push' && startsWith(ref, 'refs/tags')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download macOS artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: macOS-installers
+          path: dist-macos
+
+      - name: Download Windows artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: Windows-installers
+          path: dist-win
+
+      - name: Download Linux artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: Linux-installers
+          path: dist-linux
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: "Lightman v${{ github.ref_name }} Release"
+          files: |
+            dist-macos/Lightman Director.dmg
+            dist-macos/Lightman Sound.dmg
+            dist-macos/Lightman Light.dmg
+            dist-win/Lightman.exe
+            dist-win/LightmanSound.exe
+            dist-win/LightmanLight.exe
+            dist-linux/Lightman
+            dist-linux/LightmanSound
+            dist-linux/LightmanLight
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

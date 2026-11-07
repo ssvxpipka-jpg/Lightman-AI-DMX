@@ -1,5 +1,5 @@
 # ==========================================
-# Lightman — Python dependencies (v1.1.0)
+# Lightman — Python dependencies (v1.1.1)
 # ==========================================
 
 # --- UI & 3D ---
@@ -7,22 +7,27 @@ PySide6>=6.6.0
 pyqtgraph>=0.13.0
 PyOpenGL>=3.1.7
 numpy>=1.24.0
+pymvr>=1.0.0          # MVR export for BlenderDMX
+pygdtf>=1.0.0         # GDTF parsing for BlenderDMX fixtures
 
 # --- AI (BYOK) ---
 openai>=1.0.0
-langchain-openai>=0.1.0
-langgraph>=0.2.0
+langchain>=0.3.0
+langchain-openai>=0.2.0
+langchain-community>=0.3.0
 langchain-core>=0.3.0
+langgraph>=0.2.0
 
 # --- RAG (Memory) ---
 chromadb>=0.5.0
+tiktoken>=0.7.0       # For token-based chunking in RAG
 
-# --- Vision & Audio ---
+# --- Vision & Audio (EpocCam, Haze, Tracking) ---
 opencv-python>=4.8.0
 sounddevice>=0.4.6
 librosa>=0.10.0
 
-# --- Network & Protocols ---
+# --- Network & Protocols (Titan/grandMA3, Sound) ---
 python-osc>=1.9.0
 requests>=2.31.0
 bless>=0.2.6
