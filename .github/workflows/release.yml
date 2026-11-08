@@ -8,124 +8,102 @@ on:
 
 jobs:
   build-macos:
-    name: Build macOS Installers (Universal2)
+    name: Build macOS (Universal2)
     runs-on: macos-13
-    env:
-      MACOSX_DEPLOYMENT_TARGET: 12.0
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
+      
       - name: Install dependencies
         run: |
           /usr/bin/python3 -m pip install --upgrade pip
-          /usr/bin/python3 -m pip install -r requirements.txt pyinstaller
-
-      - name: Bundle Blender and BlenderDMX addon
+          /usr/bin/python3 -m pip install -r requirements.txt pyinstaller "pyobjc-core<12.0"
+          
+      - name: Bundle Blender
         run: /usr/bin/python3 scripts/bundle_blender.py
-
-      - name: Build Director (universal2)
-        run: pyinstaller Lightman.spec --target-arch universal2
-
-      - name: Build Sound (windowed)
-        run: pyinstaller --windowed --name LightmanSound src/sound/main.py --target-arch universal2
-
-      - name: Build Light (windowed)
-        run: pyinstaller --windowed --name LightmanLight src/light/main.py --target-arch universal2
-
-      - name: Create DMGs
-        run: |
-          hdiutil create -volname "Lightman" -srcfolder dist/Lightman.app -ov -format UDZO "dist/Lightman.dmg"
-          hdiutil create -volname "Lightman Sound" -srcfolder dist/LightmanSound.app -ov -format UDZO "dist/Lightman Sound.dmg"
-          hdiutil create -volname "Lightman Light" -srcfolder dist/LightmanLight.app -ov -format UDZO "dist/Lightman Light.dmg"
-
-      - name: Upload macOS artifacts
+        
+      - name: Build Director (Bypass spec file)
+        run: /usr/bin/python3 -m PyInstaller --noconfirm --windowed --name Lightman --paths=. --add-data "src/director/resources:src/director/resources" src/director/main.py --target-arch universal2
+        
+      - name: Create DMG
+        run: hdiutil create -volname "Lightman" -srcfolder dist/Lightman.app -ov -format UDZO Lightman.dmg
+        
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: macOS-installers
-          path: dist/*.dmg
+          name: macos-dmg
+          path: Lightman.dmg
 
   build-windows:
-    name: Build Windows Installers
+    name: Build Windows
     runs-on: windows-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
+      
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt pyinstaller
-
-      - name: Build Apps
-        run: |
-          pyinstaller --windowed --name Lightman src/director/main.py
-          pyinstaller --windowed --name LightmanSound src/sound/main.py
-          pyinstaller --windowed --name LightmanLight src/light/main.py
-
-      - name: Upload Windows artifacts
+          
+      - name: Build Director
+        run: python -m PyInstaller --noconfirm --windowed --name Lightman --paths=. --add-data "src/director/resources;src/director/resources" src/director/main.py
+        
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Windows-installers
-          path: dist/*.exe
+          name: windows-exe
+          path: dist/Lightman.exe
 
   build-linux:
-    name: Build Linux Installers
+    name: Build Linux
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
+      
+      - name: Install System Libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libegl1 libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0
+          
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
           python3 -m pip install -r requirements.txt pyinstaller
-
-      - name: Build Apps
-        run: |
-          pyinstaller --name Lightman src/director/main.py
-          pyinstaller --name LightmanSound src/sound/main.py
-          pyinstaller --name LightmanLight src/light/main.py
-
-      - name: Upload Linux artifacts
+          
+      - name: Build Director
+        run: python3 -m PyInstaller --noconfirm --windowed --name Lightman --paths=. --add-data "src/director/resources:src/director/resources" src/director/main.py
+        
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Linux-installers
-          path: |
-            dist/Lightman
-            dist/LightmanSound
-            dist/LightmanLight
+          name: linux-binary
+          path: dist/Lightman
 
   create-release:
     name: Create GitHub Release
     needs: [build-macos, build-windows, build-linux]
     runs-on: ubuntu-latest
     steps:
-      - name: Download macOS artifacts
+      - name: Download macOS
         uses: actions/download-artifact@v4
         with:
-          name: macOS-installers
-          path: dist-macos
-
-      - name: Download Windows artifacts
+          name: macos-dmg
+          
+      - name: Download Windows
         uses: actions/download-artifact@v4
         with:
-          name: Windows-installers
-          path: dist-win
-
-      - name: Download Linux artifacts
+          name: windows-exe
+          
+      - name: Download Linux
         uses: actions/download-artifact@v4
         with:
-          name: Linux-installers
-          path: dist-linux
-
-      - name: Create GitHub Release
+          name: linux-binary
+          
+      - name: Publish Release
         uses: softprops/action-gh-release@v2
         with:
-          name: "Lightman AI DMX ${{ github.ref_name }}"
           files: |
-            dist-macos/*
-            dist-win/*
-            dist-linux/*
+            Lightman.dmg
+            Lightman.exe
+            Lightman
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
