@@ -58,7 +58,6 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        shell: cmd.exe
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -117,7 +116,7 @@ jobs:
 
   create-release:
     name: Create GitHub Release
-    needs: [build-macos, build-windows, build-linux]
+    needs: [build-macos, build-windows, build-linux]ы
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
