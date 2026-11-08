@@ -8,6 +8,34 @@ on:
 
 jobs:
   build-macos:
+    name: Build macOS Installers (Universal2)
+    runs-on: macos-13  # Используем Intel-сервер для сборки Universal2
+    env:
+      MACOSX_DEPLOYMENT_TARGET: 12.0  # Поддержка macOS 12+
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install dependencies
+        run: |
+          /usr/bin/python3 -m pip install --upgrade pip
+          /usr/bin/python3 -m pip install -r requirements.txt pyinstaller
+          
+      - name: Bundle Blender
+        run: /usr/bin/python3 scripts/bundle_blender.py
+        
+      - name: Build Director App (Universal2)
+        run: pyinstaller Lightman.spec --target-arch universal2
+        
+      - name: Build Sound & Light Apps
+        run: |
+          pyinstaller --windowed --name LightmanSound src/sound/main.py --target-arch universal2
+          pyinstaller --windowed --name LightmanLight src/light/main.py --target-arch universal2
+          
+      - name: Create DMGs
+        run: |
+          hdiutil create -volname "Lightman" -srcfolder dist/Lightman.app -ov -format UDZO dist/Lightman.dmg
+          # Добавь сюда команды для Sound и Light DMG, если они нужны
     name: Build macOS Installers
     runs-on: macos-latest
     defaults:
