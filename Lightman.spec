@@ -1,7 +1,7 @@
 # -*- mode: python ; coding: utf-8 -*-
 from PyInstaller.utils.hooks import collect_all
 
-datas = [('/Users/b/Desktop/Lightman/assets', 'assets'), ('/Users/b/Desktop/Lightman/fixtures_db', 'fixtures_db'), ('/Users/b/Desktop/Lightman/src/director/theme.qss', 'src/director')]
+datas = [('assets', 'assets'), ('fixtures_db', 'fixtures_db'), ('src/director/theme.qss', 'src/director')]
 binaries = []
 hiddenimports = []
 tmp_ret = collect_all('llama_cpp')
