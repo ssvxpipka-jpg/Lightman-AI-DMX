@@ -1433,7 +1433,7 @@ def main():
             app.setStyleSheet(fh.read())
 
     # ── NEW: Auto-load fixtures catalog into RAG ────────────────────────
-    fixtures_catalog = os.path.join(_PROJECT_ROOT, "data", "fixtures_catalog.json")
+    fixtures_catalog = os.path.join(_PROJECT_ROOT, "fixtures_db", "fixtures_catalog.json")
     if os.path.isfile(fixtures_catalog):
         print(f"Auto-loading fixtures catalog into RAG: {fixtures_catalog}")
         with open(fixtures_catalog, "r", encoding="utf-8") as fh:

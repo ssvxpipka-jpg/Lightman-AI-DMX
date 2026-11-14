@@ -1,38 +1,95 @@
 # Lightman AI DMX
 
-**AI-ассистент для ОС пульта (Titan, grandMA3, EOS). Open-source, local-first.**
-**AI assistant for console OS. Open-source, local-first stage lighting control.**
+**AI assistant for console OS (Titan, grandMA3, EOS). Open-source, local-first.**
 
-[**⬇ Скачать последний релиз**](https://github.com/ssvxpipka-jpg/Lightman-AI-DMX/releases/latest) | [**❤️ Поддержать проект (DonationAlerts)**](https://www.donationalerts.com/r/afe1g)
+[**❤️ Support the Project (DonationAlerts)**](https://www.donationalerts.com/r/afe1g)
 
-Lightman — это не замена консоли, а интеллектуальный слой поверх неё. Он видит 3D-сцену через встроенный BlenderDMX, понимает DMX-протоколы (Art-Net, sACN, OSC) и помогает световику, работая локально без телеметрии.
+Lightman is not a console replacement — it's an intelligence layer on top. It sees the 3D scene via bundled BlenderDMX, understands DMX protocols (Art-Net, sACN, OSC), and assists the operator. Runs locally, no telemetry.
 
-### ✨ Фичи
-- **AI Director (BYOK)**: Подключение Groq, OpenRouter, Gemini, Mistral, Cerebras.
-- **BlenderDMX 3D Studio**: Встроенный Blender с аддоном BlenderDMX (Universal2 для macOS).
-- **EpocCam Vision**: Компьютерное зрение через веб-камеру (трекинг актеров, анализ лучей, оценка плотности дыма/Haze).
-- **Local RAG Knowledge Base**: База знаний на 300+ приборов и DMX-протоколы (ChromaDB), работает полностью локально.
-- **Absolute Blackout**: Жесткий LOCK (ИИ не может отменить, дежурный свет 2%).
-- **Console OS Integration**: Подключение к ОС пультов (Titan, grandMA3, EOS) по IP.
+---
 
-### 🛡️ Лицензия и Модель Open Core
-Проект распространяется по лицензии **MIT**. Мы используем модель **Open Core**:
-- **v1.x – v3.x (Бесплатно навсегда)**: Ядро системы, AI-директор, 3D-редактор и базовые интеграции доступны всем бесплатно без ограничений.
-- **v4.0+ (Платные модули)**: Начиная с 4-й версии, мы планируем добавлять сложные корпоративные модули (расширенный AI-резерв для больших площадок, трекинг, интеркомы) по платной подписке. Базовое ядро останется открытым.
+### 🚀 HOW TO INSTALL (SIMPLE GUIDE)
 
-### 🗺️ Roadmap (Планы)
-- **v1.1.1 (Текущий релиз)**: Интеграция BlenderDMX, EpocCam Vision, логи в UI, фиолетовая тема. *(Известный баг: старая вкладка 3D осталась в UI, будет убрана в v1.1.2).*
-- **v1.1.2**: Удаление старой вкладки 3D, добавление полной библиотеки из 300+ приборов в UI (Drag & Drop), дым-машины.
-- **v1.2.0**: Multi-agent система (ИИ-агенты для звука, света, блэкаута), авто-калибровка лучей.
-- **v2.0.0**: Серверная ОС для Llama (локальный ИИ на отдельном железе), трекинг через админ-панель, поддержка USB-пультов.
+**⚠️ IMPORTANT: VS Code IS NOT NEEDED.**
+To build the app, you only need a **Terminal** (command line), Python, and Git.
 
-### 🚀 Установка
-1. Скачай установщик для своей ОС из [Releases](https://github.com/ssvxpipka-jpg/Lightman-AI-DMX/releases).
-2. **macOS**: Открой `.dmg`, перетащи в Applications. Для первого запуска выполни в терминале: `xattr -cr /Applications/Lightman.app` (снимает блокировку Gatekeeper).
-3. **Windows/Linux**: Запусти `.exe` или бинарник из архива.
+**Step 1. Setup (All OS)**
+1. Download and install [Python 3.10+](https://www.python.org/downloads/). *(On Windows, check "Add Python to PATH" during installation)*.
+2. Download and install [Git](https://git-scm.com/).
+3. Open your terminal:
+   * **On macOS / Linux:** press `Cmd + Space` (or `Ctrl + Alt + T`) and search for **Terminal**.
+   * **On Windows:** press `Win + R`, type `powershell`, and press Enter.
 
-### 🏷️ Topics (Теги для поиска)
+**Step 2. Clone the project (All OS)**
+In the terminal, copy and paste these two commands (one by one, pressing Enter):
+```bash
+git clone https://github.com/ssvxpipka-jpg/Lightman-AI-DMX.git
+cd Lightman-AI-DMX
+```
+
+**Step 3. Install dependencies and build**
+
+**🍏 For macOS (with automatic Blender & BlenderDMX setup)**
+1. Install dependencies:
+```bash
+pip install -r requirements.txt pyinstaller
+```
+2. Download and bundle **Blender** and the **BlenderDMX** addon into the app (required for the 3D editor):
+```bash
+python3 scripts/bundle_blender.py
+```
+3. Build all apps:
+```bash
+pyinstaller Lightman.spec
+pyinstaller --windowed --name LightmanSound src/sound/main.py
+pyinstaller --windowed --name LightmanLight src/light/main.py
+```
+*(If blocked by Gatekeeper, run: `xattr -cr dist/Lightman.app`)*
+
+**🪟 For Windows (manual Blender setup required for 3D)**
+*(Note: The auto-bundling script is for macOS only. On Windows, you need to install Blender and BlenderDMX separately, or use the built-in fallback 3D view).*
+```bash
+pip install -r requirements.txt pyinstaller
+pyinstaller Lightman.spec
+pyinstaller --windowed --name LightmanSound src/sound/main.py
+pyinstaller --windowed --name LightmanLight src/light/main.py
+```
+
+**🐧 For Linux (manual Blender setup required for 3D)**
+```bash
+sudo apt-get update && sudo apt-get install -y libegl1 libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0
+pip install -r requirements.txt pyinstaller
+pyinstaller Lightman.spec
+pyinstaller --windowed --name LightmanSound src/sound/main.py
+pyinstaller --windowed --name LightmanLight src/light/main.py
+```
+
+**Step 4. Run**
+Your built apps will be in the `dist/` folder inside the project directory (`.app` on Mac, `.exe` on Windows, binaries on Linux).
+
+---
+
+### ✨ Features
+- **AI Director (BYOK)**: Supports Groq, OpenRouter, Gemini, Mistral, Cerebras.
+- **BlenderDMX 3D Studio**: Bundled Blender with BlenderDMX addon (Universal2 for macOS).
+- **EpocCam Vision**: Computer vision via webcam (actor tracking, beam analysis, Haze density estimation).
+- **Local RAG Knowledge Base**: 300+ fixtures and DMX protocols in ChromaDB, fully local.
+- **Absolute Blackout**: Hard LOCK (AI cannot override, 2% work light).
+- **Console OS Integration**: Connects to console OS (Titan, grandMA3, EOS) via IP.
+
+### 🗺️ Roadmap
+- **v1.1.1 (Current Release)**: BlenderDMX integration, EpocCam Vision, UI logs, purple theme.
+- **v1.1.2**: Full 300+ fixture library UI, smoke machines.
+- **v1.2.0**: Multi-agent system (Sound, Light, Blackout agents), auto-calibration.
+- **v2.0.0**: Dedicated OS server for Llama (local AI), tracking via admin panel, USB console support.
+
+### 🛡️ License & Open Core Model
+The project is distributed under the **MIT License**. We follow the **Open Core** model:
+- **v1.x – v3.x (Free Forever)**: The core system, AI Director, 3D editor, and base integrations are free for everyone.
+- **v4.0+ (Paid Modules)**: Starting from v4, we plan to introduce advanced enterprise modules (extended AI backup for large venues, tracking, intercoms) via paid subscription. The core will remain open.
+
+### 🏷️ Topics
 `ai` `stage-lighting` `dmx` `lighting-control` `pyside6` `langgraph` `chromadb` `blenderdmx` `opencv` `macos` `windows` `linux` `open-source` `byok` `theatre-tech` `epoccam`
 
 ---
-[**❤️ Поддержать проект (DonationAlerts)**](https://www.donationalerts.com/r/afe1g)
+[**❤️ Support the Project (DonationAlerts)**](https://www.donationalerts.com/r/afe1g)

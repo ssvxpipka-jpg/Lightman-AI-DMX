@@ -10,33 +10,33 @@ numpy>=1.24.0
 pymvr>=1.0.0          # MVR export for BlenderDMX
 pygdtf>=1.0.0         # GDTF parsing for BlenderDMX fixtures
 
-# --- AI (BYOK) ---
-openai>=1.0.0
-langchain>=0.3.0
-langchain-openai>=0.2.0
-langchain-community>=0.3.0
-langchain-core>=0.3.0
-langgraph>=0.2.0
+# --- AI (BYOK) - removal for Windows compatibility ---
+# openai>=1.0.0       # PROBLEMS on Windows - disabled
+# langchain>=0.3.0    # PROBLEMS on Windows - disabled
+# langchain-openai>=0.2.0  # PROBLEMS on Windows - disabled
+# langchain-community>=0.3.0   # PROBLEMS on Windows - disabled
+# langchain-core>=0.3.0   # PROBLEMS on Windows - disabled
+# langgraph>=0.2.0    # PROBLEMS on Windows - disabled
 
-# --- RAG (Memory) ---
-chromadb>=0.5.0
-tiktoken>=0.7.0       # For token-based chunking in RAG
+# --- RAG (Memory) - removal for Windows compatibility ---
+# chromadb>=0.5.0     # PROBLEMS on Windows - disabled
+# tiktoken>=0.7.0     # PROBLEMS on Windows - disabled
 
-# --- Vision & Audio (EpocCam, Haze, Tracking) ---
-opencv-python>=4.8.0
-sounddevice>=0.4.6
-librosa>=0.10.0
+# --- Vision & Audio (EpocCam, Haze, Tracking) - optional for Windows ---
+# opencv-python>=4.8.0  # optional on Windows
+# sounddevice>=0.4.6    # optional on Windows
+# librosa>=0.10.0       # optional on Windows
 
-python-osc>=1.8.0
-requests>=2.31.0
-bless>=0.2.6
-bleak>=0.22.0
-duckduckgo-search>=5.0.0
+# --- Network & Utils - disabled for Windows standalone build ---
+# python-osc>=1.8.0   # optional on Windows
+# requests>=2.31.0    # optional on Windows
+# bless>=0.2.6        # optional on Windows
+# bleak>=0.22.0       # optional on Windows
+# duckduckgo-search>=5.0.0   # optional on Windows
 
-# --- Auth & Utils ---
-bcrypt>=4.0.0
-keyring>=24.0.0
-python-dotenv>=1.0.0
-pyyaml>=6.0
-tqdm>=4.65.0
-pyobjc-core<12.0
+# --- Auth & Utils - disabled for Windows standalone build ---
+# bcrypt>=4.0.0       # optional on Windows
+# keyring>=24.0.0     # optional on Windows
+# python-dotenv>=1.0.0  # optional on Windows
+# pyyaml>=6.0         # optional on Windows
+# tqdm>=4.65.0        # optional on Windows

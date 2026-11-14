@@ -3,7 +3,7 @@ from PyInstaller.utils.hooks import collect_all
 
 datas = [('assets', 'assets'), ('fixtures_db', 'fixtures_db'), ('src/director/theme.qss', 'src/director')]
 binaries = []
-hiddenimports = []
+hiddenimports = ['sip', 'PySide6', 'pyqtgraph', 'PyOpenGL', 'numpy', 'pymvr', 'pygdtf']  # Windows compatibility
 tmp_ret = collect_all('llama_cpp')
 datas += tmp_ret[0]; binaries += tmp_ret[1]; hiddenimports += tmp_ret[2]
 tmp_ret = collect_all('chromadb')

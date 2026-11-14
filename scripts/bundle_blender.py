@@ -128,7 +128,7 @@ def clone_blender_dmx(blender_app_path, version):
 
     # ── NEW: Copy fixture catalog into BlenderDMX addon ─────────────────────
     PROJECT_ROOT = Path(__file__).resolve().parent.parent
-    fixtures_catalog = PROJECT_ROOT / "data" / "fixtures_catalog.json"
+    fixtures_catalog = PROJECT_ROOT / "fixtures_db" / "fixtures_catalog.json"
     dest_fixture_dir = dest_addon / "fixtures"
     dest_fixture_dir.mkdir(parents=True, exist_ok=True)
 
