@@ -23,14 +23,14 @@ jobs:
       - name: Bundle Blender and BlenderDMX addon
         run: /usr/bin/python3 scripts/bundle_blender.py
 
-      - name: Build Director (arm64 macOS)
-        run: /usr/bin/python3 -m PyInstaller Lightman.spec --clean
+      - name: Build Director (universal2 macOS 12+)
+        run: /usr/bin/python3 -m PyInstaller Lightman.spec --target-arch universal2 --clean
 
-      - name: Build Sound (arm64 macOS)
-        run: /usr/bin/python3 -m PyInstaller --windowed --name LightmanSound src/sound/main.py --clean
+      - name: Build Sound (universal2, windowed)
+        run: /usr/bin/python3 -m PyInstaller --windowed --name LightmanSound src/sound/main.py --target-arch universal2 --clean
 
-      - name: Build Light (arm64 macOS)
-        run: /usr/bin/python3 -m PyInstaller --windowed --name LightmanLight src/light/main.py --clean
+      - name: Build Light (universal2, windowed)
+        run: /usr/bin/python3 -m PyInstaller --windowed --name LightmanLight src/light/main.py --target-arch universal2 --clean
 
       - name: Create DMG
         run: |
