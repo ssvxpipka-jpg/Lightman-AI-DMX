@@ -64,7 +64,6 @@ Lightman uses fixture definition data from `fixtures_db/fixtures_catalog.json` t
    Скачай файл под свою операционную систему:
    - **Windows:** `Lightman-windows.exe` (инсталлятор)
    - **macOS:** `Lightman-macOS.dmg` (архив)
-   - **Linux:** `lightman-linux.tar.gz` или `.deb` пакет
 
 2. **Установи программу:**
 
@@ -79,9 +78,6 @@ Lightman uses fixture definition data from `fixtures_db/fixtures_catalog.json` t
    - Нажми правой кнопкой на иконку в Applications → "Открыть" (только первый раз для обхода Gatekeeper)
    - Lightman появится в Launchpad
 
-   **Linux:**
-   - Через терминал: `sudo dpkg -i lightman_1.1.8_amd64.deb`
-   - Или из архива: `tar -xzf lightman-linux.tar.gz` → `./Lightman`
 
 3. **Запусти Lightman:**
    - Найди иконку в меню Пуск (Windows) или Launchpad (macOS)
@@ -92,7 +88,6 @@ Lightman uses fixture definition data from `fixtures_db/fixtures_catalog.json` t
 **Если программа не запускается:**
 - **Windows:** Нажми "Все равно запустить" при предупреждении от Windows
 - **macOS:** Системные настройки → Общие → "Открыть все равно" рядом с Lightman
-- **Linux:** Убедись, что у исполняемого файла есть права на выполнение: `chmod +x Lightman`
 
 ### 🏷️ Topics (Теги для поиска)
 `ai` `stage-lighting` `dmx` `lighting-control` `pyside6` `langgraph` `chromadb` `blenderdmx` `opencv` `macos` `windows` `linux` `open-source` `byok` `theatre-tech` `epoccam`

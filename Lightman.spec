@@ -38,7 +38,7 @@ exe = EXE(
     console=False,
     disable_windowed_traceback=False,
     argv_emulation=False,
-    target_arch=None,
+    target_arch='universal2',
     codesign_identity=None,
     entitlements_file=None,
 )
@@ -54,6 +54,6 @@ coll = COLLECT(
 app = BUNDLE(
     coll,
     name='Lightman.app',
-    icon=None,
+    icon='assets/app_icon.png',
     bundle_identifier=None,
 )
