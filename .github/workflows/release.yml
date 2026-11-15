@@ -26,8 +26,8 @@ jobs:
       - name: Build Director (universal2 macOS 12+)
         run: /usr/bin/python3 -m PyInstaller Lightman.spec --target-arch universal2 --clean
 
-      - name: Build Sound (universal2, windowed)
-        run: /usr/bin/python3 -m PyInstaller --windowed --name LightmanSound src/sound/main.py --target-arch universal2 --clean
+      - name: Build Sound (windowed)
+        run: python -m PyInstaller --windowed --name LightmanSound src/sound/main.py --clean
 
       - name: Build Light (universal2, windowed)
         run: /usr/bin/python3 -m PyInstaller --windowed --name LightmanLight src/light/main.py --target-arch universal2 --clean
@@ -63,6 +63,9 @@ jobs:
 
       - name: Build Light (windowed)
         run: python -m PyInstaller --windowed --name LightmanLight src/light/main.py --clean
+
+      - name: Build Sound (windowed)
+        run: python -m PyInstaller --windowed --name LightmanSound src/sound/main.py --clean
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
