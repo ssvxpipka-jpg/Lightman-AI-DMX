@@ -23,17 +23,18 @@ jobs:
       - name: Bundle Blender and BlenderDMX addon
         run: /usr/bin/python3 scripts/bundle_blender.py
 
-      - name: Build Director (universal2)
-        run: /usr/bin/python3 -m PyInstaller Lightman.spec --windowed --target-arch universal2 --clean
+      - name: Build Director (arm64 macOS)
+        run: /usr/bin/python3 -m PyInstaller Lightman.spec --clean
 
-      - name: Build Sound (windowed, universal2)
-        run: /usr/bin/python3 -m PyInstaller --windowed --name LightmanSound src/sound/main.py --target-arch universal2 --clean
+      - name: Build Sound (arm64 macOS)
+        run: /usr/bin/python3 -m PyInstaller --windowed --name LightmanSound src/sound/main.py --clean
 
-      - name: Build Light (windowed, universal2)
-        run: /usr/bin/python3 -m PyInstaller --windowed --name LightmanLight src/light/main.py --target-arch universal2 --clean
+      - name: Build Light (arm64 macOS)
+        run: /usr/bin/python3 -m PyInstaller --windowed --name LightmanLight src/light/main.py --clean
 
       - name: Create DMG
-        run: hdiutil create -volname "Lightman" -srcfolder dist/Lightman.app -ov -format UDZO Lightman.dmg
+        run: |
+          hdiutil create -volname "Lightman" -srcfolder dist/Lightman.app -ov -format UDZO Lightman.dmg
 
       - name: Upload macOS artifact
         uses: actions/upload-artifact@v4
@@ -52,13 +53,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install minimal dependencies for Windows
-        run: python -m pip install -r requirements.txt pyinstaller --no-deps
+        run: python -m pip install -r requirements.txt pyinstaller
 
       - name: Clean dist directory
-        run: rmdir /S /Q dist
+        run: if exist dist rmdir /S /Q dist
 
       - name: Build Director
-        run: python -m PyInstaller Lightman.spec --windowed --clean
+        run: python -m PyInstaller Lightman.spec --clean
 
       - name: Build Light (windowed)
         run: python -m PyInstaller --windowed --name LightmanLight src/light/main.py --clean
